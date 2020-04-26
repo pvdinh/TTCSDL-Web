@@ -1,0 +1,73 @@
+﻿@{
+    if (Session["type"] == null)
+    {
+        Response.Redirect("/Login/index");
+    }
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.unobtrusive-ajax/3.2.5/jquery.unobtrusive-ajax.min.js"></script>
+    @Styles.Render("~/assets/layout/layout.css")
+</head>
+<body>
+    <header class="fixed-top" style="background: black; color: white; font-weight: bolder;">
+        <div class="container-fluid p-3" style="">
+            <div class="row">
+                <div class="col-sm-6" style="text-align: center;">
+                    Liên hệ: 0963118434(Zalo)-phamvandinh@gmail.com
+                </div>
+                <div class="col-sm-6" style="text-align: center;">
+                    <a href="#"
+                       class="dropdown-toggle"
+                       data-toggle="dropdown"
+                       style="color: white;">
+                        <span class="hello">Xin chào, </span>@Session["type"]<span class="caret"></span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a href="/login/logout" class="dropdown-item">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="bodyweb">
+        <div class="slidebar">
+            <header>Quản lý Cafe</header>
+            <ul>
+                <li>
+                    <a href="/staff/home/index"> <i class="fas fa-coffee"></i>Cà phê</a>
+                </li>
+                <li>
+                    <a href="/staff/home/product"><i class="fab fa-product-hunt"></i>Sản phẩm</a>
+                </li>
+                <li>
+                    <a href="#"><i class="fas fa-fire"></i>Bán chạy</a>
+                </li>
+                @*<li>
+                        <a href="#"> <i class="fas fa-clipboard"></i>Phiếu thu</a>
+                    </li>
+                    <li>
+                        <a href="#"> <i class="fas fa-clipboard"></i>Phiếu chi</a>
+                    </li>*@
+            </ul>
+        </div>
+        <div class="rightweb">
+            <div class="rightbody">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

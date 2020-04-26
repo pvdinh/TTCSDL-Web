@@ -1,0 +1,118 @@
+﻿
+@model PagedList.IPagedList<CAFE_Song_Lo.Models.staff>
+@using PagedList.Mvc
+@{
+    ViewBag.Title = "Setting";
+    Layout = "~/Areas/admin/Views/Shared/_Layout.cshtml";
+}
+<title>Setting</title>
+<link href="~/Content/PagedList.css" rel="stylesheet" />
+<link href="~/assets/Setting/setting.css" rel="stylesheet" />
+<div class="rightbody">
+    <div class="container p-2"
+         style="color: var(--color3);text-align: center;">
+        <h3>Danh sách nhân viên.</h3>
+    </div>
+
+    <form action="/admin/home/setting" method="get">
+        <div class="container">
+            <div class="input-group col-md-4 mb-2" style="padding-left:0px;">
+                @{if (ViewBag.search != null && string.Compare(ViewBag.search,"",true) !=0 )
+                    {
+                        <input class="form-control py-2" type="search" value="@ViewBag.search" id="example-search-input" name="searchstring">
+                    }
+                    else
+                    {
+                        <input class="form-control py-2" type="search" placeholder="search by name" id="example-search-input" name="searchstring">
+                    }
+                }
+                <span class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="submit">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </span>
+            </div>
+            <div class="container" style="text-align:left;padding-left:0px; margin-bottom:10px;">
+                <select class="form-control" name="status" style="width: 355px;margin-left: 0px;">
+                    <option value="Status">Status</option>
+                    <option value="Hoạt động">Hoạt động</option>
+                    <option value="Ngưng hoạt động">Ngưng hoạt động</option>
+                </select>
+            </div>
+
+        </div>
+    </form>
+
+    <div class="container" style="overflow-x: auto;">
+        <table class="table table-bordered table-sm table-hover">
+            <thead class="thead-light">
+                <tr>
+                    <th>ID Staff</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <Th>Position</Th>
+                    <th>Status</th>
+                    <th>ID Account</th>
+                    <th id="add-staff">Add</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.idstaff</td>
+                        <td>@item.name</td>
+                        <td>@item.email</td>
+                        <td>@item.position</td>
+                        <td>@item.status</td>
+                        <td>@item.idaccount</td>
+                        <td id="Save-staff">
+                            <a href="/admin/home/editstaff/@item.idstaff"><button>Edit</button><br /></a>
+
+                            <a href="/admin/home/deletestaff/@item.idstaff" onclick="return confirm('Are you want to Delete ??')"><button>Delete</button></a>
+
+                        </td>
+                    </tr>
+                }
+
+                <tr id="insert">
+                    <td>@ViewBag.count</td>
+                    <form action="/admin/home/addstaff" method="post">
+                        <td><input id="name" name="name" required="true" type="text"> </td>
+                        <td><input id="email" name="email" required="true" type="text"></td>
+                        <td>
+                            <select name="position" style="margin-top:18px;">
+                                <option value="Nhân viên">Nhân viên</option>
+                                <option value="Ban quản lý">Ban quản lý</option>
+                                <option value="Bộ phận vệ sinh">Bộ phận vệ sinh</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select name="status" style="margin-top:18px;">
+                                <option value="Hoạt động">Hoạt động</option>
+                                <option value="Ngưng hoạt động">Ngưng hoạt động</option>
+                            </select>
+                        </td>
+                        <td>@ViewBag.count</td>
+                        <th id="Save-staff">
+                            <button type="submit">Save</button>
+                            <h3 id="Cancel-staff">Cancel</h3>
+                        </th>
+                    </form>
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <br />
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)/@Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("setting", new { page, currentFliter = ViewBag.CurrentFliter }))
+    <script>
+        $('#insert').hide();
+        $("#add-staff").click(function () {
+            $("#insert").show();
+        });
+        $("#Cancel-staff").click(function () {
+            $("#insert").hide();
+        });
+    </script>

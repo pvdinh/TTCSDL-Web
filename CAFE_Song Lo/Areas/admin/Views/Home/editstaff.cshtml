@@ -1,0 +1,20 @@
+﻿
+@{
+    ViewBag.Title = "editstaff";
+    Layout = "~/Areas/admin/Views/Shared/_Layout.cshtml";
+}
+<link href="~/assets/Setting/editstaff.css" rel="stylesheet" />
+<div class="deletestaff">
+    <h2 style="color:black;S">editstaff</h2>
+    <form action="/admin/home/savestaff" method="post">
+        <div> <input name="idstaff" readonly="readonly" required="true" type="text" value="@ViewBag.editstaff.idstaff" /></div>
+        <div>   <input name="name" required="true" type="text" value="@ViewBag.editstaff.name" /></div>
+        <div>  <input name="email" required="true" type="text" value="@ViewBag.editstaff.email" /></div>
+        <div>  <input name="position" required="true" type="text" value="@ViewBag.editstaff.position" /></div>
+        <div>  <input name="status" required="true" type="text" value="@ViewBag.editstaff.status" /></div>
+        <div>  <input name="idaccount" readonly="readonly" required="true" type="text" value="@ViewBag.editstaff.idaccount" /></div>
+        <button id="back"> <a href="/admin/home/setting" style="color:black;">Back</a></button>
+        <button id="delete" type="submit"> Save  </button>
+    </form>
+
+</div>

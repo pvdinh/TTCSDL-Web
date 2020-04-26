@@ -1,0 +1,763 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="QuanLyCafeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="account">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="username" Type="varchar" MaxLength="20" />
+          <Property Name="password" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="type" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="bill">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="datecheckin" Type="datetime" />
+          <Property Name="datecheckout" Type="datetime" />
+          <Property Name="status" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="idaccount" Type="int" Nullable="false" />
+          <Property Name="idtable" Type="int" Nullable="false" />
+          <Property Name="Tongtien" Type="float" />
+        </EntityType>
+        <EntityType Name="billinfo">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idbill" Type="int" Nullable="false" />
+          <Property Name="idfood" Type="int" Nullable="false" />
+          <Property Name="count" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="billinfo_audit">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idbill" Type="int" />
+          <Property Name="idfood" Type="int" />
+          <Property Name="cout" Type="int" />
+        </EntityType>
+        <EntityType Name="category">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="food">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" />
+          <Property Name="price" Type="float" Nullable="false" />
+          <Property Name="idcategory" Type="int" Nullable="false" />
+          <Property Name="image" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="nhacungcap">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ten" Type="nvarchar" MaxLength="50" />
+          <Property Name="diachi" Type="nvarchar" MaxLength="50" />
+          <Property Name="email" Type="varchar" MaxLength="50" />
+          <Property Name="phone" Type="varchar" MaxLength="15" />
+        </EntityType>
+        <EntityType Name="nhapsanpham">
+          <Key>
+            <PropertyRef Name="idsanpham" />
+          </Key>
+          <Property Name="idsanpham" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idncc" Type="int" />
+          <Property Name="tensanpham" Type="nvarchar" MaxLength="50" />
+          <Property Name="tongtien" Type="float" />
+        </EntityType>
+        <EntityType Name="staff">
+          <Key>
+            <PropertyRef Name="idstaff" />
+          </Key>
+          <Property Name="idstaff" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="status" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="position" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="email" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="idaccount" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="staff_audit">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idstaff" Type="int" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="changedate" Type="datetime" Nullable="false" />
+          <Property Name="action" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tablefood">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="status" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__bill__idaccount__1BFD2C07">
+          <End Role="account" Type="Self.account" Multiplicity="1" />
+          <End Role="bill" Type="Self.bill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="account">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="bill">
+              <PropertyRef Name="idaccount" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__bill__idtable__1CF15040">
+          <End Role="tablefood" Type="Self.tablefood" Multiplicity="1" />
+          <End Role="bill" Type="Self.bill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tablefood">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="bill">
+              <PropertyRef Name="idtable" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__billinfo__idbill__239E4DCF">
+          <End Role="bill" Type="Self.bill" Multiplicity="1" />
+          <End Role="billinfo" Type="Self.billinfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="bill">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="billinfo">
+              <PropertyRef Name="idbill" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__billinfo__idfood__24927208">
+          <End Role="food" Type="Self.food" Multiplicity="1" />
+          <End Role="billinfo" Type="Self.billinfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="food">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="billinfo">
+              <PropertyRef Name="idfood" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__food__idcategory__1FCDBCEB">
+          <End Role="category" Type="Self.category" Multiplicity="1" />
+          <End Role="food" Type="Self.food" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="category">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="food">
+              <PropertyRef Name="idcategory" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__nhapsanph__idncc__693CA210">
+          <End Role="nhacungcap" Type="Self.nhacungcap" Multiplicity="0..1" />
+          <End Role="nhapsanpham" Type="Self.nhapsanpham" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="nhacungcap">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="nhapsanpham">
+              <PropertyRef Name="idncc" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__staff__idaccount__164452B1">
+          <End Role="account" Type="Self.account" Multiplicity="1" />
+          <End Role="staff" Type="Self.staff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="account">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="staff">
+              <PropertyRef Name="idaccount" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="add_bill" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="datecheckin" Type="datetime" Mode="In" />
+          <Parameter Name="datecheckout" Type="datetime" Mode="In" />
+          <Parameter Name="status" Type="nvarchar" Mode="In" />
+          <Parameter Name="idaccount" Type="int" Mode="In" />
+          <Parameter Name="idtable" Type="int" Mode="In" />
+        </Function>
+        <Function Name="add_billinfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idbill" Type="int" Mode="In" />
+          <Parameter Name="idfood" Type="int" Mode="In" />
+          <Parameter Name="count" Type="int" Mode="In" />
+        </Function>
+        <Function Name="addproduct" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="name" Type="nvarchar" Mode="In" />
+          <Parameter Name="price" Type="float" Mode="In" />
+          <Parameter Name="idcategory" Type="int" Mode="In" />
+          <Parameter Name="image" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="Addstaffaccount" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="name" Type="nvarchar" Mode="In" />
+          <Parameter Name="status" Type="nvarchar" Mode="In" />
+          <Parameter Name="position" Type="nvarchar" Mode="In" />
+          <Parameter Name="email" Type="nvarchar" Mode="In" />
+          <Parameter Name="idaccount" Type="int" Mode="In" />
+          <Parameter Name="username" Type="varchar" Mode="In" />
+          <Parameter Name="password" Type="varchar" Mode="In" />
+          <Parameter Name="type" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="Addstaffaccountlatest" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="name" Type="nvarchar" Mode="In" />
+          <Parameter Name="status" Type="nvarchar" Mode="In" />
+          <Parameter Name="position" Type="nvarchar" Mode="In" />
+          <Parameter Name="email" Type="nvarchar" Mode="In" />
+          <Parameter Name="idaccount" Type="int" Mode="In" />
+          <Parameter Name="username" Type="varchar" Mode="In" />
+          <Parameter Name="password" Type="varchar" Mode="In" />
+          <Parameter Name="type" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="customer_table" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="delete_billinfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idbill" Type="int" Mode="In" />
+        </Function>
+        <Function Name="delete_billinfo_idfood" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idfood" Type="int" Mode="In" />
+          <Parameter Name="idbill" Type="int" Mode="In" />
+        </Function>
+        <Function Name="deletestaffaccount" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="empty_table" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="updatestaff" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="name" Type="nvarchar" Mode="In" />
+          <Parameter Name="status" Type="nvarchar" Mode="In" />
+          <Parameter Name="position" Type="nvarchar" Mode="In" />
+          <Parameter Name="email" Type="nvarchar" Mode="In" />
+          <Parameter Name="idaccount" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="QuanLyCafeModelStoreContainer">
+          <EntitySet Name="account" EntityType="Self.account" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="bill" EntityType="Self.bill" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="billinfo" EntityType="Self.billinfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="billinfo_audit" EntityType="Self.billinfo_audit" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="category" EntityType="Self.category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="food" EntityType="Self.food" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="nhacungcap" EntityType="Self.nhacungcap" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="nhapsanpham" EntityType="Self.nhapsanpham" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="staff" EntityType="Self.staff" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="staff_audit" EntityType="Self.staff_audit" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tablefood" EntityType="Self.tablefood" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__bill__idaccount__1BFD2C07" Association="Self.FK__bill__idaccount__1BFD2C07">
+            <End Role="account" EntitySet="account" />
+            <End Role="bill" EntitySet="bill" />
+          </AssociationSet>
+          <AssociationSet Name="FK__bill__idtable__1CF15040" Association="Self.FK__bill__idtable__1CF15040">
+            <End Role="tablefood" EntitySet="tablefood" />
+            <End Role="bill" EntitySet="bill" />
+          </AssociationSet>
+          <AssociationSet Name="FK__billinfo__idbill__239E4DCF" Association="Self.FK__billinfo__idbill__239E4DCF">
+            <End Role="bill" EntitySet="bill" />
+            <End Role="billinfo" EntitySet="billinfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK__billinfo__idfood__24927208" Association="Self.FK__billinfo__idfood__24927208">
+            <End Role="food" EntitySet="food" />
+            <End Role="billinfo" EntitySet="billinfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK__food__idcategory__1FCDBCEB" Association="Self.FK__food__idcategory__1FCDBCEB">
+            <End Role="category" EntitySet="category" />
+            <End Role="food" EntitySet="food" />
+          </AssociationSet>
+          <AssociationSet Name="FK__nhapsanph__idncc__693CA210" Association="Self.FK__nhapsanph__idncc__693CA210">
+            <End Role="nhacungcap" EntitySet="nhacungcap" />
+            <End Role="nhapsanpham" EntitySet="nhapsanpham" />
+          </AssociationSet>
+          <AssociationSet Name="FK__staff__idaccount__164452B1" Association="Self.FK__staff__idaccount__164452B1">
+            <End Role="account" EntitySet="account" />
+            <End Role="staff" EntitySet="staff" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="QuanLyCafeModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="account">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="username" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="password" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="type" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="bills" Relationship="Self.FK__bill__idaccount__1BFD2C07" FromRole="account" ToRole="bill" />
+          <NavigationProperty Name="staffs" Relationship="Self.FK__staff__idaccount__164452B1" FromRole="account" ToRole="staff" />
+        </EntityType>
+        <EntityType Name="bill">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="datecheckin" Type="DateTime" Precision="3" />
+          <Property Name="datecheckout" Type="DateTime" Precision="3" />
+          <Property Name="status" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="idaccount" Type="Int32" Nullable="false" />
+          <Property Name="idtable" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="account" Relationship="Self.FK__bill__idaccount__1BFD2C07" FromRole="bill" ToRole="account" />
+          <NavigationProperty Name="tablefood" Relationship="Self.FK__bill__idtable__1CF15040" FromRole="bill" ToRole="tablefood" />
+          <NavigationProperty Name="billinfoes" Relationship="Self.FK__billinfo__idbill__239E4DCF" FromRole="bill" ToRole="billinfo" />
+          <Property Name="Tongtien" Type="Double" />
+        </EntityType>
+        <EntityType Name="billinfo">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idbill" Type="Int32" Nullable="false" />
+          <Property Name="idfood" Type="Int32" Nullable="false" />
+          <Property Name="count" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="bill" Relationship="Self.FK__billinfo__idbill__239E4DCF" FromRole="billinfo" ToRole="bill" />
+          <NavigationProperty Name="food" Relationship="Self.FK__billinfo__idfood__24927208" FromRole="billinfo" ToRole="food" />
+        </EntityType>
+        <EntityType Name="category">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="foods" Relationship="Self.FK__food__idcategory__1FCDBCEB" FromRole="category" ToRole="food" />
+        </EntityType>
+        <EntityType Name="food">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="price" Type="Double" Nullable="false" />
+          <Property Name="idcategory" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="billinfoes" Relationship="Self.FK__billinfo__idfood__24927208" FromRole="food" ToRole="billinfo" />
+          <NavigationProperty Name="category" Relationship="Self.FK__food__idcategory__1FCDBCEB" FromRole="food" ToRole="category" />
+          <Property Name="image" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="staff">
+          <Key>
+            <PropertyRef Name="idstaff" />
+          </Key>
+          <Property Name="idstaff" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="status" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="position" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="idaccount" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="account" Relationship="Self.FK__staff__idaccount__164452B1" FromRole="staff" ToRole="account" />
+        </EntityType>
+        <EntityType Name="tablefood">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="bills" Relationship="Self.FK__bill__idtable__1CF15040" FromRole="tablefood" ToRole="bill" />
+        </EntityType>
+        <Association Name="FK__bill__idaccount__1BFD2C07">
+          <End Role="account" Type="Self.account" Multiplicity="1" />
+          <End Role="bill" Type="Self.bill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="account">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="bill">
+              <PropertyRef Name="idaccount" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__staff__idaccount__164452B1">
+          <End Role="account" Type="Self.account" Multiplicity="1" />
+          <End Role="staff" Type="Self.staff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="account">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="staff">
+              <PropertyRef Name="idaccount" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__bill__idtable__1CF15040">
+          <End Role="tablefood" Type="Self.tablefood" Multiplicity="1" />
+          <End Role="bill" Type="Self.bill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tablefood">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="bill">
+              <PropertyRef Name="idtable" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__billinfo__idbill__239E4DCF">
+          <End Role="bill" Type="Self.bill" Multiplicity="1" />
+          <End Role="billinfo" Type="Self.billinfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="bill">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="billinfo">
+              <PropertyRef Name="idbill" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__billinfo__idfood__24927208">
+          <End Role="food" Type="Self.food" Multiplicity="1" />
+          <End Role="billinfo" Type="Self.billinfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="food">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="billinfo">
+              <PropertyRef Name="idfood" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__food__idcategory__1FCDBCEB">
+          <End Role="category" Type="Self.category" Multiplicity="1" />
+          <End Role="food" Type="Self.food" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="category">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="food">
+              <PropertyRef Name="idcategory" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="QuanLyCafeEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="accounts" EntityType="Self.account" />
+          <EntitySet Name="bills" EntityType="Self.bill" />
+          <EntitySet Name="billinfoes" EntityType="Self.billinfo" />
+          <EntitySet Name="categories" EntityType="Self.category" />
+          <EntitySet Name="foods" EntityType="Self.food" />
+          <EntitySet Name="staffs" EntityType="Self.staff" />
+          <EntitySet Name="tablefoods" EntityType="Self.tablefood" />
+          <AssociationSet Name="FK__bill__idaccount__1BFD2C07" Association="Self.FK__bill__idaccount__1BFD2C07">
+            <End Role="account" EntitySet="accounts" />
+            <End Role="bill" EntitySet="bills" />
+          </AssociationSet>
+          <AssociationSet Name="FK__staff__idaccount__164452B1" Association="Self.FK__staff__idaccount__164452B1">
+            <End Role="account" EntitySet="accounts" />
+            <End Role="staff" EntitySet="staffs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__bill__idtable__1CF15040" Association="Self.FK__bill__idtable__1CF15040">
+            <End Role="tablefood" EntitySet="tablefoods" />
+            <End Role="bill" EntitySet="bills" />
+          </AssociationSet>
+          <AssociationSet Name="FK__billinfo__idbill__239E4DCF" Association="Self.FK__billinfo__idbill__239E4DCF">
+            <End Role="bill" EntitySet="bills" />
+            <End Role="billinfo" EntitySet="billinfoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__billinfo__idfood__24927208" Association="Self.FK__billinfo__idfood__24927208">
+            <End Role="food" EntitySet="foods" />
+            <End Role="billinfo" EntitySet="billinfoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__food__idcategory__1FCDBCEB" Association="Self.FK__food__idcategory__1FCDBCEB">
+            <End Role="category" EntitySet="categories" />
+            <End Role="food" EntitySet="foods" />
+          </AssociationSet>
+          <EntitySet Name="staff_audit" EntityType="QuanLyCafeModel.staff_audit" />
+          <FunctionImport Name="add_bill">
+            <Parameter Name="datecheckin" Mode="In" Type="DateTime" />
+            <Parameter Name="datecheckout" Mode="In" Type="DateTime" />
+            <Parameter Name="status" Mode="In" Type="String" />
+            <Parameter Name="idaccount" Mode="In" Type="Int32" />
+            <Parameter Name="idtable" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="add_billinfo">
+            <Parameter Name="idbill" Mode="In" Type="Int32" />
+            <Parameter Name="idfood" Mode="In" Type="Int32" />
+            <Parameter Name="count" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="Addstaffaccount">
+            <Parameter Name="name" Mode="In" Type="String" />
+            <Parameter Name="status" Mode="In" Type="String" />
+            <Parameter Name="position" Mode="In" Type="String" />
+            <Parameter Name="email" Mode="In" Type="String" />
+            <Parameter Name="idaccount" Mode="In" Type="Int32" />
+            <Parameter Name="username" Mode="In" Type="String" />
+            <Parameter Name="password" Mode="In" Type="String" />
+            <Parameter Name="type" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Addstaffaccountlatest">
+            <Parameter Name="name" Mode="In" Type="String" />
+            <Parameter Name="status" Mode="In" Type="String" />
+            <Parameter Name="position" Mode="In" Type="String" />
+            <Parameter Name="email" Mode="In" Type="String" />
+            <Parameter Name="idaccount" Mode="In" Type="Int32" />
+            <Parameter Name="username" Mode="In" Type="String" />
+            <Parameter Name="password" Mode="In" Type="String" />
+            <Parameter Name="type" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="customer_table">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="delete_billinfo">
+          <Parameter Name="idbill" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="deletestaffaccount">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="empty_table">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="nhacungcaps" EntityType="QuanLyCafeModel.nhacungcap" />
+          <EntitySet Name="nhapsanphams" EntityType="QuanLyCafeModel.nhapsanpham" />
+          <AssociationSet Name="FK__nhapsanph__idncc__693CA210" Association="QuanLyCafeModel.FK__nhapsanph__idncc__693CA210">
+            <End Role="nhacungcap" EntitySet="nhacungcaps" />
+            <End Role="nhapsanpham" EntitySet="nhapsanphams" />
+          </AssociationSet>
+          <FunctionImport Name="updatestaff">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="name" Mode="In" Type="String" />
+            <Parameter Name="status" Mode="In" Type="String" />
+            <Parameter Name="position" Mode="In" Type="String" />
+            <Parameter Name="email" Mode="In" Type="String" />
+            <Parameter Name="idaccount" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="delete_billinfo_idfood">
+            <Parameter Name="idfood" Mode="In" Type="Int32" />
+            <Parameter Name="idbill" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="addproduct">
+            <Parameter Name="name" Mode="In" Type="String" />
+            <Parameter Name="price" Mode="In" Type="Double" />
+            <Parameter Name="idcategory" Mode="In" Type="Int32" />
+            <Parameter Name="image" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="billinfo_audit" EntityType="QuanLyCafeModel.billinfo_audit" />
+        </EntityContainer>
+        <EntityType Name="staff_audit">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idstaff" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="changedate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="action" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="nhacungcap">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ten" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="diachi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="phone" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="nhapsanphams" Relationship="QuanLyCafeModel.FK__nhapsanph__idncc__693CA210" FromRole="nhacungcap" ToRole="nhapsanpham" />
+        </EntityType>
+        <EntityType Name="nhapsanpham">
+          <Key>
+            <PropertyRef Name="idsanpham" />
+          </Key>
+          <Property Name="idsanpham" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idncc" Type="Int32" />
+          <Property Name="tensanpham" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="tongtien" Type="Double" />
+          <NavigationProperty Name="nhacungcap" Relationship="QuanLyCafeModel.FK__nhapsanph__idncc__693CA210" FromRole="nhapsanpham" ToRole="nhacungcap" />
+        </EntityType>
+        <Association Name="FK__nhapsanph__idncc__693CA210">
+          <End Type="QuanLyCafeModel.nhacungcap" Role="nhacungcap" Multiplicity="0..1" />
+          <End Type="QuanLyCafeModel.nhapsanpham" Role="nhapsanpham" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="nhacungcap">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="nhapsanpham">
+              <PropertyRef Name="idncc" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="billinfo_audit">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idbill" Type="Int32" />
+          <Property Name="idfood" Type="Int32" />
+          <Property Name="cout" Type="Int32" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="QuanLyCafeModelStoreContainer" CdmEntityContainer="QuanLyCafeEntities">
+          <EntitySetMapping Name="accounts">
+            <EntityTypeMapping TypeName="QuanLyCafeModel.account">
+              <MappingFragment StoreEntitySet="account">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="type" ColumnName="type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="bills">
+            <EntityTypeMapping TypeName="QuanLyCafeModel.bill">
+              <MappingFragment StoreEntitySet="bill">
+                <ScalarProperty Name="Tongtien" ColumnName="Tongtien" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="datecheckin" ColumnName="datecheckin" />
+                <ScalarProperty Name="datecheckout" ColumnName="datecheckout" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="idaccount" ColumnName="idaccount" />
+                <ScalarProperty Name="idtable" ColumnName="idtable" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="billinfoes">
+            <EntityTypeMapping TypeName="QuanLyCafeModel.billinfo">
+              <MappingFragment StoreEntitySet="billinfo">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="idbill" ColumnName="idbill" />
+                <ScalarProperty Name="idfood" ColumnName="idfood" />
+                <ScalarProperty Name="count" ColumnName="count" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="categories">
+            <EntityTypeMapping TypeName="QuanLyCafeModel.category">
+              <MappingFragment StoreEntitySet="category">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="foods">
+            <EntityTypeMapping TypeName="QuanLyCafeModel.food">
+              <MappingFragment StoreEntitySet="food">
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="idcategory" ColumnName="idcategory" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="staffs">
+            <EntityTypeMapping TypeName="QuanLyCafeModel.staff">
+              <MappingFragment StoreEntitySet="staff">
+                <ScalarProperty Name="idstaff" ColumnName="idstaff" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="position" ColumnName="position" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="idaccount" ColumnName="idaccount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tablefoods">
+            <EntityTypeMapping TypeName="QuanLyCafeModel.tablefood">
+              <MappingFragment StoreEntitySet="tablefood">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="status" ColumnName="status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="staff_audit">
+            <EntityTypeMapping TypeName="QuanLyCafeModel.staff_audit">
+              <MappingFragment StoreEntitySet="staff_audit">
+                <ScalarProperty Name="action" ColumnName="action" />
+                <ScalarProperty Name="changedate" ColumnName="changedate" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="idstaff" ColumnName="idstaff" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="add_bill" FunctionName="QuanLyCafeModel.Store.add_bill" />
+          <FunctionImportMapping FunctionImportName="add_billinfo" FunctionName="QuanLyCafeModel.Store.add_billinfo" />
+          <FunctionImportMapping FunctionImportName="Addstaffaccount" FunctionName="QuanLyCafeModel.Store.Addstaffaccount" />
+          <FunctionImportMapping FunctionImportName="Addstaffaccountlatest" FunctionName="QuanLyCafeModel.Store.Addstaffaccountlatest" />
+          <FunctionImportMapping FunctionImportName="customer_table" FunctionName="QuanLyCafeModel.Store.customer_table" />
+          <FunctionImportMapping FunctionImportName="delete_billinfo" FunctionName="QuanLyCafeModel.Store.delete_billinfo" />
+          <FunctionImportMapping FunctionImportName="deletestaffaccount" FunctionName="QuanLyCafeModel.Store.deletestaffaccount" />
+          <FunctionImportMapping FunctionImportName="empty_table" FunctionName="QuanLyCafeModel.Store.empty_table" />
+          <EntitySetMapping Name="nhacungcaps">
+            <EntityTypeMapping TypeName="QuanLyCafeModel.nhacungcap">
+              <MappingFragment StoreEntitySet="nhacungcap">
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="diachi" ColumnName="diachi" />
+                <ScalarProperty Name="ten" ColumnName="ten" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="nhapsanphams">
+            <EntityTypeMapping TypeName="QuanLyCafeModel.nhapsanpham">
+              <MappingFragment StoreEntitySet="nhapsanpham">
+                <ScalarProperty Name="tongtien" ColumnName="tongtien" />
+                <ScalarProperty Name="tensanpham" ColumnName="tensanpham" />
+                <ScalarProperty Name="idncc" ColumnName="idncc" />
+                <ScalarProperty Name="idsanpham" ColumnName="idsanpham" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="updatestaff" FunctionName="QuanLyCafeModel.Store.updatestaff" />
+          <FunctionImportMapping FunctionImportName="delete_billinfo_idfood" FunctionName="QuanLyCafeModel.Store.delete_billinfo_idfood" />
+          <FunctionImportMapping FunctionImportName="addproduct" FunctionName="QuanLyCafeModel.Store.addproduct" />
+          <EntitySetMapping Name="billinfo_audit">
+            <EntityTypeMapping TypeName="QuanLyCafeModel.billinfo_audit">
+              <MappingFragment StoreEntitySet="billinfo_audit">
+                <ScalarProperty Name="cout" ColumnName="cout" />
+                <ScalarProperty Name="idfood" ColumnName="idfood" />
+                <ScalarProperty Name="idbill" ColumnName="idbill" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,141 @@
+﻿@model CAFE_Song_Lo.Models.classdata
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/staff/Views/Shared/_Layout.cshtml";
+}
+<link href="~/assets/product/order.css" rel="stylesheet" />
+<link href="~/assets/product/product.css" rel="stylesheet" />
+@*thư viện toastr*@
+<link href="~/Content/toastr.css" rel="stylesheet" />
+<script src="~/Scripts/toastr.js"></script>
+<script src="~/Scripts/toastr.min.js"></script>
+<title>Order</title>
+<div class="oderitem">
+    <div class="tableoder">
+        <header>
+            <h2>Chọn đồ Bàn @ViewBag.idtable :</h2><h3>@DateTime.Now.ToShortDateString() @DateTime.Now.ToLongTimeString()</h3>
+        </header>
+        <div id="cart">
+            @*Không dùng Action bởi vì nó không render đồng thời cùng web mà sau khi có tương tác*@
+            @{ Html.RenderAction("cart");}
+        </div>
+
+        <div class="buttonlist">
+            <a href="/staff/home/index?id=@ViewBag.idtable&temp=1" style="text-decoration:none;">
+                <button class="confirm">Xác Nhận</button>
+            </a>
+            <a href="/staff/home/bill?id=@ViewBag.idtable&temp=2&tongtien=@Session["tongtien"]" style="text-decoration:none;"> <button class="bill">In hoá đơn và Thanh Toán</button></a>
+
+        </div>
+    </div>
+    <div class="category">
+        <div style="width: 100%; background-color: whitesmoke;padding: 30px;">
+            <span style="font-size: 20px;">Hạng mục món ăn.<br /></span>
+            <a href="#caphe" class="categoryitem">CÀ PHÊ<br /></a>
+            <a href="#tramacchiato" class="categoryitem">TRÀ & MACCHIATO<br /></a>
+            <a href="#daxay" class="categoryitem">THỨC UỐNG ĐÁ XAY<br /></a>
+            <a href="#traicay" class="categoryitem">THỨC UỐNG TRÁI CÂY<br /></a>
+            <a href="#snack" class="categoryitem">BÁNH & SNACK</a>
+        </div>
+
+    </div>
+</div>
+<div class="productitem">
+    <div class="listproduct">
+        <div class="container-fluid pl-4 mb-2">
+            <span class="categoryname" id="caphe">Cà phê</span>
+        </div>
+        @foreach (var item in Model.allfoods.Where(s => s.idcategory == 1))
+        {
+            <div class="product_Item">
+                <div class="productImage">
+                    <a data-ajax="true" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#cart"
+                       href="/staff/order/cartt/@item.id"><img src="~/assets/image/icon/cà phê/@item.image" alt="@item.name" /></a>
+                </div>
+                <div class="product_info">
+                    <h3 id="product_name"><a data-ajax="true" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#cart" href="/staff/order/cartt/@item.id">@item.name</a></h3>
+                    <p id="product_price">@item.price đ</p>
+                    <div><a data-ajax="true" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#cart" href="/staff/order/cartt/@item.id" id="detail_btn">Chọn</a></div>
+                </div>
+            </div>
+        }
+
+        <div class="container-fluid pl-4 mb-2">
+            <span class="categoryname" id="tramacchiato">TRÀ & MACCHIATO</span>
+        </div>
+
+        @foreach (var item in Model.allfoods.Where(s => s.idcategory == 2))
+        {
+            <div class="product_Item">
+                <div class="productImage">
+                    <a data-ajax="true" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#cart"
+                       href="/staff/order/cartt/@item.id"><img src="~/assets/image/icon/trà & macchiato/@item.image" alt="@item.name" /></a>
+                </div>
+                <div class="product_info">
+                    <h3 id="product_name"><a data-ajax="true" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#cart" href="/staff/order/cartt/@item.id">@item.name</a></h3>
+                    <p id="product_price">@item.price đ</p>
+                    <div><a data-ajax="true" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#cart" href="/staff/order/cartt/@item.id" id="detail_btn">Chọn</a></div>
+                </div>
+            </div>
+        }
+
+        <div class="container-fluid pl-4 mb-2">
+            <span class="categoryname" id="daxay">THỨC UỐNG ĐÁ XAY</span>
+        </div>
+
+        @foreach (var item in Model.allfoods.Where(s => s.idcategory == 3))
+        {
+            <div class="product_Item">
+                <div class="productImage">
+                    <a data-ajax="true" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#cart"
+                       href="/staff/order/cartt/@item.id"><img src="~/assets/image/icon/thức uống đá xay/@item.image" alt="@item.name" /></a>
+                </div>
+                <div class="product_info">
+                    <h3 id="product_name"><a data-ajax="true" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#cart" href="/staff/order/cartt/@item.id">@item.name</a></h3>
+                    <p id="product_price">@item.price đ</p>
+                    <div><a data-ajax="true" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#cart" href="/staff/order/cartt/@item.id" id="detail_btn">Chọn</a></div>
+                </div>
+            </div>
+        }
+
+        <div class="container-fluid pl-4 mb-2">
+            <span class="categoryname" id="traicay">THỨC UỐNG TRÁI CÂY</span>
+        </div>
+        @foreach (var item in Model.allfoods.Where(s => s.idcategory == 4))
+        {
+            <div class="product_Item">
+                <div class="productImage">
+                    <a data-ajax="true" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#cart"
+                       href="/staff/order/cartt/@item.id"><img src="~/assets/image/icon/thức uống trái cây/@item.image" alt="@item.name" /></a>
+                </div>
+                <div class="product_info">
+                    <h3 id="product_name"><a data-ajax="true" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#cart" href="/staff/order/cartt/@item.id">@item.name</a></h3>
+                    <p id="product_price">@item.price đ</p>
+                    <div><a data-ajax="true" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#cart" href="/staff/order/cartt/@item.id" id="detail_btn">Chọn</a></div>
+                </div>
+            </div>
+        }
+
+        <div class="container-fluid pl-4 mb-2">
+            <span class="categoryname" id="snack">BÁNH VÀ SNACK</span>
+        </div>
+
+        @foreach (var item in Model.allfoods.Where(s => s.idcategory == 5))
+        {
+            <div class="product_Item">
+                <div class="productImage">
+                    <a data-ajax="true" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#cart"
+                       href="/staff/order/cartt/@item.id"><img src="~/assets/image/icon/bánh & snack/@item.image" alt="@item.name" /></a>
+                </div>
+                <div class="product_info">
+                    <h3 id="product_name"><a data-ajax="true" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#cart" href="/staff/order/cartt/@item.id">@item.name</a></h3>
+                    <p id="product_price">@item.price đ</p>
+                    <div><a data-ajax="true" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#cart" href="/staff/order/cartt/@item.id" id="detail_btn">Chọn</a></div>
+                </div>
+            </div>
+        }
+
+
+    </div>
+</div>
+

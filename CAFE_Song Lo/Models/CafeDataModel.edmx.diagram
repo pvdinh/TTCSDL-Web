@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="46d2cc5e28ab4771bfdaf68505703975" Name="Diagram1">
+        <EntityTypeShape EntityType="QuanLyCafeModel.account" Width="1.5" PointX="0.75" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyCafeModel.bill" Width="1.5" PointX="3" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyCafeModel.billinfo" Width="1.5" PointX="5.25" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyCafeModel.category" Width="1.5" PointX="0.75" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyCafeModel.food" Width="1.5" PointX="3" PointY="10.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyCafeModel.staff" Width="1.5" PointX="3" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyCafeModel.tablefood" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="QuanLyCafeModel.FK__bill__idaccount__1BFD2C07" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLyCafeModel.FK__staff__idaccount__164452B1" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLyCafeModel.FK__bill__idtable__1CF15040" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLyCafeModel.FK__billinfo__idbill__239E4DCF" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLyCafeModel.FK__billinfo__idfood__24927208" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLyCafeModel.FK__food__idcategory__1FCDBCEB" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="QuanLyCafeModel.staff_audit" Width="1.5" PointX="5.25" PointY="1.125" />
+        <EntityTypeShape EntityType="QuanLyCafeModel.nhacungcap" Width="1.5" PointX="10.5" PointY="6.75" />
+        <EntityTypeShape EntityType="QuanLyCafeModel.nhapsanpham" Width="1.5" PointX="7.625" PointY="7" />
+        <AssociationConnector Association="QuanLyCafeModel.FK__nhapsanph__idncc__693CA210" />
+        <EntityTypeShape EntityType="QuanLyCafeModel.billinfo_audit" Width="1.5" PointX="7.375" PointY="0.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

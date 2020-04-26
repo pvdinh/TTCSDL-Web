@@ -1,0 +1,48 @@
+﻿
+@model CAFE_Song_Lo.Models.classdata
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/staff/Views/Shared/_Layout.cshtml";
+}
+<link href="~/assets/Index/Trang.css" rel="stylesheet" />
+<link href="~/Content/toastr.css" rel="stylesheet" />
+<script src="~/Scripts/toastr.js"></script>
+<script src="~/Scripts/toastr.min.js"></script>
+@if (ViewBag.temp == 1)
+{
+    <script type="text/javascript">toastr.success('Đã Xác Nhận Đặt Bàn.', 'Thông báo');</script>
+}
+@if (ViewBag.temp == 0)
+{
+    <script type="text/javascript">toastr.success('Đã Xác Nhận Thay đổi món.', 'Thông báo');</script>
+}
+@if (ViewBag.temp == 2)
+{
+    <script type="text/javascript">toastr.success('Xác nhận thanh toán thành công.', 'Thông báo');</script>
+}
+<title>Home</title>
+<div class="toptable">
+    <div class="all">Toàn bộ</div>
+    <div class="customer">Có khách</div>
+    <div class="empty">Bàn trống</div>
+</div>
+<div class="alltable">
+    @foreach (var item in Model.alltablefoods)
+    {
+        <a href="/staff/order/index/@item.id" style="text-decoration:none;"> <div class="table" id="@item.status.Replace(" ",string.Empty).ToLower()">@item.name <br /> @item.status </div> </a>
+    }
+</div>
+<script>
+
+    $(".all").click(function () {
+        $(".table").show();
+    })
+    $(".customer").click(function () {
+        $("#trống").hide();
+        $("#cóngười").show();
+    })
+    $(".empty").click(function () {
+        $("#trống").show();
+        $("#cóngười").hide();
+    })
+</script>

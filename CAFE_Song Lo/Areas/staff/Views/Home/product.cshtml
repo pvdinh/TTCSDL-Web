@@ -1,0 +1,103 @@
+﻿@model CAFE_Song_Lo.Models.classdata
+
+@{
+    ViewBag.Title = "product";
+    Layout = "~/Areas/staff/Views/Shared/_Layout.cshtml";
+}
+<link href="~/assets/product/product.css" rel="stylesheet" />
+
+
+<div class="productitem">
+    <div class="listproduct">
+        <div class="container-fluid pl-4 mb-2">
+            <span class="categoryname" id="caphe">Cà phê</span>
+        </div>
+        @foreach (var item in Model.allfoods.Where(s => s.idcategory == 1))
+        {
+            <div class="product_Item">
+                <div class="productImage">
+                    <a href="#"><img src="~/assets/image/icon/cà phê/@item.image" alt="@item.name" /></a>
+                </div>
+                <div class="product_info">
+                    <h3 id="product_name"><a href="#">@item.name</a></h3>
+                    <p id="product_price">@item.price đ</p>
+                    <div><a href="#" id="detail_btn">Thông tin</a></div>
+                </div>
+            </div>
+        }
+
+        <div class="container-fluid pl-4 mb-2">
+            <span class="categoryname" id="tramacchiato">TRÀ & MACCHIATO</span>
+        </div>
+
+        @foreach (var item in Model.allfoods.Where(s => s.idcategory == 2))
+        {
+            <div class="product_Item">
+                <div class="productImage">
+                    <a href="#"><img src="~/assets/image/icon/trà & macchiato/@item.image" alt="@item.name" /></a>
+                </div>
+                <div class="product_info">
+                    <h3 id="product_name"><a href="#">@item.name</a></h3>
+                    <p id="product_price">@item.price đ</p>
+                    <div><a href="#" id="detail_btn">Thông tin</a></div>
+                </div>
+            </div>
+        }
+
+        <div class="container-fluid pl-4 mb-2">
+            <span class="categoryname" id="daxay">THỨC UỐNG ĐÁ XAY</span>
+        </div>
+
+        @foreach (var item in Model.allfoods.Where(s => s.idcategory == 3))
+        {
+            <div class="product_Item">
+                <div class="productImage">
+                    <a href="#"><img src="~/assets/image/icon/thức uống đá xay/@item.image" alt="@item.name" /></a>
+                </div>
+                <div class="product_info">
+                    <h3 id="product_name"><a href="#">@item.name</a></h3>
+                    <p id="product_price">@item.price đ</p>
+                    <div><a href="#" id="detail_btn">Thông tin</a></div>
+                </div>
+            </div>
+        }
+
+        <div class="container-fluid pl-4 mb-2">
+            <span class="categoryname" id="traicay">THỨC UỐNG TRÁI CÂY</span>
+        </div>
+        @foreach (var item in Model.allfoods.Where(s => s.idcategory == 4))
+        {
+            <div class="product_Item">
+                <div class="productImage">
+                    <a href="#"><img src="~/assets/image/icon/thức uống trái cây/@item.image" alt="@item.name" /></a>
+                </div>
+                <div class="product_info">
+                    <h3 id="product_name"><a href="#">@item.name</a></h3>
+                    <p id="product_price">@item.price đ</p>
+                    <div><a href="#" id="detail_btn">Thông tin</a></div>
+                </div>
+            </div>
+        }
+
+        <div class="container-fluid pl-4 mb-2">
+            <span class="categoryname" id="snack">BÁNH VÀ SNACK</span>
+        </div>
+
+        @foreach (var item in Model.allfoods.Where(s => s.idcategory == 5))
+        {
+            <div class="product_Item">
+                <div class="productImage">
+                    <a href="#"><img src="~/assets/image/icon/bánh & snack/@item.image" alt="@item.name" /></a>
+                </div>
+                <div class="product_info">
+                    <h3 id="product_name"><a href="#">@item.name</a></h3>
+                    <p id="product_price">@item.price đ</p>
+                    <div><a href="#" id="detail_btn">Thông tin</a></div>
+                </div>
+            </div>
+        }
+
+
+    </div>
+</div>>
+

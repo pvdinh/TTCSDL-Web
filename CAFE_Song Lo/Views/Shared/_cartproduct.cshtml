@@ -1,0 +1,82 @@
+﻿
+@model CAFE_Song_Lo.Models.classdata
+
+@using CAFE_Song_Lo.Models
+
+@*tạo 1 đối tượng dùng cho 1 sản phẩm trong giỏ hàng*@
+@functions{
+    public class cart
+    {
+
+        private int id;
+        private int idbill;
+        private string name;
+        private int count;
+        private double price;
+
+        public cart() { }
+        public cart(int id, int idbill, string name, int count, double price) { this.id = id; this.idbill = idbill; this.name = name; this.count = count; this.price = price; }
+        public int ID { set { id = value; } get { return id; } }
+        public int IDBILL { set { idbill = value; } get { return idbill; } }
+        public string NAME { set { name = value; } get { return name; } }
+        public int COUNT { set { count = value; } get { return count; } }
+        public double PRICE { set { price = value; } get { return price; } }
+
+        public double totalmoney()
+        {
+            return price * count;
+        }
+
+    }
+
+}
+
+@{
+    // tạo 1 list để lưu lại danh sách các món ăn của từng bill,ứng với mỗi billinfo ta sẽ lấy ra món ăn theo số lượng của món.
+    double tongtien = 0;
+    List<cart> listcart = new List<cart>();
+    for (int i = 0; i < Model.allbillinfos.Count; i++)
+    {
+        listcart.Add(new cart(Model.allfoods[i].id, Model.allbillinfos[i].idbill, Model.allfoods[i].name, Model.allbillinfos[i].count, Model.allfoods[i].price));
+    }
+}
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr style="background: var(--color3);">
+            <th>ID</th>
+            <td>Tên Sản Phẩm</td>
+            <td>Số Lượng</td>
+            <td>Giá Bán</td>
+            <td>Thành Tiền</td>
+            <td></td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in listcart)
+        {
+            if (item.IDBILL == int.Parse(Session["idbill"].ToString()))
+            {
+                <tr class="addproduct">
+                    <th>@item.ID</th>
+                    <th>@item.NAME</th>
+                    <th>
+                        <div class="input-group spinner" style="display: flex;">
+                            <a data-ajax="true" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#cart" href="/admin/order/reduction/@item.ID"><button class="btn btn-default" type="button"><i class="fa fas fa-minus"></i></button></a>
+                            <input style="width: 40px;" readonly="readonly" type="text" class="txtNumber form-control quantity_product_order text-center" value="@item.COUNT">
+                            <a data-ajax="true" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#cart" href="/admin/order/cartt/@item.ID"><button class="btn btn-default" type="button"><i class="fa fas fa-plus"></i></button></a>
+                        </div>
+                    </th>
+                    <th>@item.PRICE</th>
+                    <th>@item.totalmoney()</th>
+                    <th>
+                        <a data-ajax="true" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#cart" href="/admin/order/delproduct/@item.ID" style="color:black;"
+                           onmouseover="this.style.color='red'" onclick="return confirm('Are you want to Delete ??')">Delete</a>
+                    </th>
+                </tr>
+                tongtien += item.totalmoney();
+                Session["tongtien"] = tongtien;
+            }
+        }
+    </tbody>
+
+</table>

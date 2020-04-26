@@ -1,0 +1,95 @@
+
+.tableoder{
+    float: left;
+    width: 70%;
+    overflow: auto;
+}
+
+.categoryitem{
+    text-decoration: none;
+    color: black;
+    padding-left: 20px;
+}
+
+.category{
+    color: var(--color3);
+    font-size: 15px;
+    font-weight: bolder;
+    padding-top: 10px;
+    float: right;
+    width: 30%;
+    padding-left: 50px;
+}
+
+.oderitem header{
+    text-align: center;
+    padding: 10px 20px;
+    color: var(--color3);
+}
+
+.oderitem{
+    margin-left: 10px;
+    position: fixed;
+    width: 52%;
+}
+.productitem{
+    float: right;
+    width: 40%;
+}
+
+.listproduct{
+    display: flex;
+    justify-content: center;
+    border-left: 3px solid var(--color3);
+}
+
+@media only screen and (max-width: 1000px){
+    .slidebar{
+        visibility: hidden;
+    }
+    .rightweb{
+        width: 100%;
+    }
+    .oderitem{
+        z-index: 1;
+        background: whitesmoke;
+        width: 100%;
+        height: 20%;
+        overflow: auto;
+        border-bottom: 2px solid rgba(100, 98, 98, 0.712);
+        padding-left: 50px;
+    }
+    .productitem{
+        margin-top: 21%;
+        width: 100%;
+    }
+    .listproduct{
+        display: flex;
+        justify-content: center;
+    }
+}
+
+.buttonlist{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.confirm{
+    border-radius: 5px;
+    border: 1px solid var(--color3);
+    padding: 7px 10px;
+    outline: none;
+    color: var(--color3);
+    
+}
+.bill{
+    border-radius: 5px;
+    border: 1px solid var(--color3);
+    outline: none;
+    color: var(--color3);
+    padding: 7px 10px;
+    float: right;
+}
+.buttonlist button:hover{
+    background: wheat;
+    cursor: pointer;
+}
