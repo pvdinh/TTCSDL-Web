@@ -17,7 +17,7 @@
     <form action="/admin/home/setting" method="get">
         <div class="container">
             <div class="input-group col-md-4 mb-2" style="padding-left:0px;">
-                @{if (ViewBag.search != null && string.Compare(ViewBag.search,"",true) !=0 )
+                @{if (ViewBag.search != null && string.Compare(ViewBag.search, "", true) != 0)
                     {
                         <input class="form-control py-2" type="search" value="@ViewBag.search" id="example-search-input" name="searchstring">
                     }
@@ -28,12 +28,12 @@
                 }
                 <span class="input-group-append">
                     <button class="btn btn-outline-secondary" type="submit">
-                        <i class="fa fa-search"></i>
+                        <i class="fa fa-search"> Search</i>
                     </button>
                 </span>
             </div>
             <div class="container" style="text-align:left;padding-left:0px; margin-bottom:10px;">
-                <select class="form-control" name="status" style="width: 355px;margin-left: 0px;">
+                <select class="form-control" name="status" style="width: 355px;margin-left: 0px;" id="status">
                     <option value="Status">Status</option>
                     <option value="Hoạt động">Hoạt động</option>
                     <option value="Ngưng hoạt động">Ngưng hoạt động</option>
@@ -46,7 +46,7 @@
     <div class="container" style="overflow-x: auto;">
         <table class="table table-bordered table-sm table-hover">
             <thead class="thead-light">
-                <tr>
+                <tr style="line-height:40px;">
                     <th>ID Staff</th>
                     <th>Name</th>
                     <th>Email</th>
@@ -106,7 +106,14 @@
     </div>
     <br />
     Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)/@Model.PageCount
-    @Html.PagedListPager(Model, page => Url.Action("setting", new { page, currentFliter = ViewBag.CurrentFliter }))
+    @Html.PagedListPager(Model, page => Url.Action("setting", new { page, searchstring = ViewBag.search, status = ViewBag.status }))
+    @if (string.Compare(ViewBag.status, "Status", true) != 0)
+    {
+        <script>
+                        $("#status option[value='@ViewBag.status']").prop("selected", "selected");
+
+        </script>
+    }
     <script>
         $('#insert').hide();
         $("#add-staff").click(function () {
