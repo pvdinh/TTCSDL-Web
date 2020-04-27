@@ -38,19 +38,10 @@ namespace CAFE_Song_Lo.Areas.admin.Controllers
             return View(data);
         }
         [HttpGet]
-        public ActionResult Setting(string currentFilter, string searchstring, int? page, string Status)
+        public ActionResult Setting(string currentFilter, string currentFilter1, string searchstring, int? page, string Status)
         {
             ViewBag.search = searchstring;
             ViewBag.status = Status;
-            if (searchstring != null)
-            {
-                page = 1;
-            }
-            else
-            {
-                currentFilter = searchstring;
-            }
-            ViewBag.currentFliter = searchstring;
             if (!string.IsNullOrEmpty(searchstring))
             {
                 data.allstaffs = db.staffs.Where(s => s.name.Contains(searchstring)).ToList();
@@ -83,6 +74,11 @@ namespace CAFE_Song_Lo.Areas.admin.Controllers
             ViewBag.count = db.staffs.ToList().Count();
             return View(data.allstaffs.ToPagedList(pagenumber, pageSize));
         }
+
+        //public ActionResult receipt()
+        //{
+
+        //}
         public ActionResult editstaff(int id)
         {
             classdata edit = new classdata();
