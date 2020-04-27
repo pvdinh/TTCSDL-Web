@@ -38,7 +38,7 @@ namespace CAFE_Song_Lo.Areas.admin.Controllers
             return View(data);
         }
         [HttpGet]
-        public ActionResult Setting(string currentFilter, string currentFilter1, string searchstring, int? page, string Status)
+        public ActionResult Setting(string searchstring, int? page, string Status)
         {
             ViewBag.search = searchstring;
             ViewBag.status = Status;
@@ -75,10 +75,16 @@ namespace CAFE_Song_Lo.Areas.admin.Controllers
             return View(data.allstaffs.ToPagedList(pagenumber, pageSize));
         }
 
-        //public ActionResult receipt()
-        //{
-
-        //}
+        public ActionResult receipt(int? page)
+        {
+            ReceiptData data = new ReceiptData();
+            int pageSize = 5;
+            int pagenumber = page ?? 1;
+            data.allbills = db.bills.ToList().ToPagedList(pagenumber, pageSize);
+            data.listnames = db.Database.SqlQuery<string>("SELECT name FROM  dbo.staff WHERE idaccount IN (SELECT idaccount FROM dbo.bill)").ToList();
+            ViewBag.count = data.allbills.Count();
+            return View(data);
+        }
         public ActionResult editstaff(int id)
         {
             classdata edit = new classdata();
