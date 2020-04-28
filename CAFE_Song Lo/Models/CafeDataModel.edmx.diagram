@@ -22,7 +22,6 @@
         <EntityTypeShape EntityType="QuanLyCafeModel.nhacungcap" Width="1.5" PointX="10.5" PointY="6.75" />
         <EntityTypeShape EntityType="QuanLyCafeModel.nhapsanpham" Width="1.5" PointX="7.625" PointY="7" />
         <AssociationConnector Association="QuanLyCafeModel.FK__nhapsanph__idncc__693CA210" />
-        <EntityTypeShape EntityType="QuanLyCafeModel.billinfo_audit" Width="1.5" PointX="7.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
