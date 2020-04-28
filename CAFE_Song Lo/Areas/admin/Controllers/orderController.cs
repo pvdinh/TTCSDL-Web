@@ -111,6 +111,7 @@ namespace CAFE_Song_Lo.Areas.admin.Controllers
 
         public ActionResult delproduct(int id)
         {
+            //khởi tạo tạm thời 1 dbb
             using (QuanLyCafeEntities dbb = new QuanLyCafeEntities())
             {
                 db.delete_billinfo_idfood(id, int.Parse(Session["idbill"].ToString()));
