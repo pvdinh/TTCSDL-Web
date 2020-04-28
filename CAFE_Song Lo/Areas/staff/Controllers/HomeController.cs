@@ -103,7 +103,7 @@ namespace CAFE_Song_Lo.Areas.staff.Controllers
                 }
                 if(tongtien == 0)
                 {
-                    return RedirectToAction("index", "order", new { id = id });
+                    return RedirectToAction("index", "order", new { id = id, status = 4 });
                 }
                 else
                 {

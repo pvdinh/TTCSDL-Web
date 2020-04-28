@@ -14,6 +14,10 @@
 {
     <script type="text/javascript">toastr.warning('Xin mời chọn món trước khi xác nhận.', 'Thông báo');</script>
 }
+@if (ViewBag.temp == 4)
+{
+    <script type="text/javascript">toastr.warning('Xin mời chọn món trước khi thanh toán.', 'Thông báo');</script>
+}
 <div class="oderitem">
     <div class="tableoder">
         <header>
@@ -28,7 +32,7 @@
             <a href="/admin/home/index?id=@ViewBag.idtable&temp=1" style="text-decoration:none;">
                 <button class="confirm">Xác Nhận</button>
             </a>
-            <a href="/admin/home/bill?id=@ViewBag.idtable&temp=2" style="text-decoration:none;"> <button class="bill">In hoá đơn và Thanh Toán</button></a>
+            <a href="/admin/home/bill?id=@ViewBag.idtable&temp=2" style="text-decoration:none;" onclick="return confirm('Bạn có xác nhận thanh toán ??');"> <button class="bill">In hoá đơn và Thanh Toán</button></a>
 
         </div>
     </div>
