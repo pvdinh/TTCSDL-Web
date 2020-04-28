@@ -80,9 +80,26 @@ namespace CAFE_Song_Lo.Areas.admin.Controllers
             ReceiptData data = new ReceiptData();
             int pageSize = 5;
             int pagenumber = page ?? 1;
-            data.allbills = db.bills.ToList().ToPagedList(pagenumber, pageSize);
-            data.listnames = db.Database.SqlQuery<string>("SELECT name FROM  dbo.staff WHERE idaccount IN (SELECT idaccount FROM dbo.bill)").ToList();
-            ViewBag.count = data.allbills.Count();
+            double? tongtien = 0;
+            List<bill> listbill = db.bills.Where(s => s.Tongtien > 0).ToList();
+            ViewBag.count = listbill.Count();
+            foreach (var item in listbill)
+            {
+                tongtien += item.Tongtien;
+            }
+            ViewBag.Tongtien = tongtien;
+            data.allbills = db.bills.ToList().Where(s=>s.Tongtien > 0 ).ToPagedList(pagenumber, pageSize);
+            data.listnames = new List<string>();
+
+            foreach(var item in data.allbills)
+            {
+                tongtien += item.Tongtien;
+                using(QuanLyCafeEntities dbb=new QuanLyCafeEntities())
+                {
+                    var x = dbb.staffs.ToList().Where(s => s.idaccount == item.idaccount).FirstOrDefault();
+                    data.listnames.Add(x.name);
+                }
+            }
             return View(data);
         }
         public ActionResult editstaff(int id)
