@@ -7,16 +7,24 @@
 }
 @{
     int i = 0;
-}   
+}
 <title>Receipt</title>
 <link href="~/Content/PagedList.css" rel="stylesheet" />
 <link href="~/assets/Setting/setting.css" rel="stylesheet" />
+<link href="~/Content/datepicker.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
 <div class="rightbody">
     <div class="container p-2"
          style="color: var(--color3);text-align: center;">
         <h3>Danh sách Phiếu Thu.</h3>
     </div>
+
     <div class="container-fluid px-5" style="overflow-x: auto;">
+        <input type="text" id="search-date-from" class="form-control" placeholder="Từ ngày">
+        <span id="picker">to</span>
+        <input type="text" id="search-date-to" class="form-control" placeholder="Đến ngày">
         <table class="table table-bordered table-sm table-hover">
             <thead class="thead-light">
                 <tr style="line-height:50px;">
@@ -52,6 +60,20 @@
     </div>
 </div>
 <br />
+<script>
+    $('#search-date-from').datetimepicker({
+        timepicker: false,
+        datepicker: true,
+        format: 'd-m-Y',
+        week: true
+    })
+    $('#search-date-to').datetimepicker({
+        timepicker: false,
+        datepicker: true,
+        format: 'd-m-Y',
+        week: true
+    })
+</script>
 
         Page @(Model.allbills.PageCount < Model.allbills.PageNumber ? 0 : Model.allbills.PageNumber)/@Model.allbills.PageCount
         @Html.PagedListPager(Model.allbills, page => Url.Action("receipt", new { page, searchstring = ViewBag.search, status = ViewBag.status }))

@@ -246,6 +246,7 @@
     <Content Include="assets\product\product.css" />
     <Content Include="assets\Setting\editstaff.css" />
     <Content Include="assets\Setting\setting.css" />
+    <Content Include="Content\datepicker.css" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\toastr.css" />
     <Content Include="Content\toastr.min.css" />
