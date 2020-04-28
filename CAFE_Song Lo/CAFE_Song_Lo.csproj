@@ -151,9 +151,6 @@
     <Compile Include="Models\billinfo.cs">
       <DependentUpon>CafeDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\billinfo_audit.cs">
-      <DependentUpon>CafeDataModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\CafeDataModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -242,6 +239,7 @@
     <Content Include="assets\Index\Trang.css" />
     <Content Include="assets\layout\layout.css" />
     <Content Include="assets\login\Login.css" />
+    <Content Include="assets\product\labelproduct.css" />
     <Content Include="assets\product\order.css" />
     <Content Include="assets\product\product.css" />
     <Content Include="assets\Setting\editstaff.css" />
