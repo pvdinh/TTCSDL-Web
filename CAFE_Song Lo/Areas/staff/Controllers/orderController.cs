@@ -12,11 +12,12 @@ namespace CAFE_Song_Lo.Areas.staff.Controllers
         // GET: staff/order
         QuanLyCafeEntities db = new QuanLyCafeEntities();
         classdata data = new classdata();
-        public ActionResult Index(int id)
+        public ActionResult Index(int id, int? status)
         {
+            ViewBag.temp = status;
             //nhận được id bàn
             ViewBag.idtable = id;
-
+            Session.Timeout = 360;
             //tìm trong bill xem bàn đã có hoá đơn chưa theo id bàn và status của bill
             var x = db.bills.ToList().Where(s => s.idtable == id && string.Compare(s.status, "0", true) == 0).FirstOrDefault();
             if (x == null)
@@ -40,6 +41,7 @@ namespace CAFE_Song_Lo.Areas.staff.Controllers
                     x.datecheckin = DateTime.Now;
                     db.SaveChanges();
                 }
+
             }
 
             data.allfoods = db.foods.ToList();

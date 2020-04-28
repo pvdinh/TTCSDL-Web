@@ -35,15 +35,6 @@
           <Property Name="idfood" Type="int" Nullable="false" />
           <Property Name="count" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="billinfo_audit">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="idbill" Type="int" />
-          <Property Name="idfood" Type="int" />
-          <Property Name="cout" Type="int" />
-        </EntityType>
         <EntityType Name="category">
           <Key>
             <PropertyRef Name="id" />
@@ -247,6 +238,11 @@
         <Function Name="empty_table" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id" Type="int" Mode="In" />
         </Function>
+        <Function Name="top10bestsell" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="updateimageproduct" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="image" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="updatestaff" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id" Type="int" Mode="In" />
           <Parameter Name="name" Type="nvarchar" Mode="In" />
@@ -259,7 +255,6 @@
           <EntitySet Name="account" EntityType="Self.account" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="bill" EntityType="Self.bill" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="billinfo" EntityType="Self.billinfo" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="billinfo_audit" EntityType="Self.billinfo_audit" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="category" EntityType="Self.category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="food" EntityType="Self.food" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="nhacungcap" EntityType="Self.nhacungcap" Schema="dbo" store:Type="Tables" />
@@ -551,7 +546,11 @@
             <Parameter Name="idcategory" Mode="In" Type="Int32" />
             <Parameter Name="image" Mode="In" Type="String" />
           </FunctionImport>
-          <EntitySet Name="billinfo_audit" EntityType="QuanLyCafeModel.billinfo_audit" />
+          <FunctionImport Name="top10bestsell" ReturnType="Collection(Int32)" />
+          <FunctionImport Name="updateimageproduct">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="image" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="staff_audit">
           <Key>
@@ -596,15 +595,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="billinfo_audit">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="idbill" Type="Int32" />
-          <Property Name="idfood" Type="Int32" />
-          <Property Name="cout" Type="Int32" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -727,16 +717,8 @@
           <FunctionImportMapping FunctionImportName="updatestaff" FunctionName="QuanLyCafeModel.Store.updatestaff" />
           <FunctionImportMapping FunctionImportName="delete_billinfo_idfood" FunctionName="QuanLyCafeModel.Store.delete_billinfo_idfood" />
           <FunctionImportMapping FunctionImportName="addproduct" FunctionName="QuanLyCafeModel.Store.addproduct" />
-          <EntitySetMapping Name="billinfo_audit">
-            <EntityTypeMapping TypeName="QuanLyCafeModel.billinfo_audit">
-              <MappingFragment StoreEntitySet="billinfo_audit">
-                <ScalarProperty Name="cout" ColumnName="cout" />
-                <ScalarProperty Name="idfood" ColumnName="idfood" />
-                <ScalarProperty Name="idbill" ColumnName="idbill" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="top10bestsell" FunctionName="QuanLyCafeModel.Store.top10bestsell" />
+          <FunctionImportMapping FunctionImportName="updateimageproduct" FunctionName="QuanLyCafeModel.Store.updateimageproduct" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
