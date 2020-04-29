@@ -37,7 +37,6 @@ namespace CAFE_Song_Lo.Models
         public virtual DbSet<staff_audit> staff_audit { get; set; }
         public virtual DbSet<nhacungcap> nhacungcaps { get; set; }
         public virtual DbSet<nhapsanpham> nhapsanphams { get; set; }
-        public virtual DbSet<billinfo_audit> billinfo_audit { get; set; }
     
         public virtual int add_bill(Nullable<System.DateTime> datecheckin, Nullable<System.DateTime> datecheckout, string status, Nullable<int> idaccount, Nullable<int> idtable)
         {
@@ -252,6 +251,24 @@ namespace CAFE_Song_Lo.Models
                 new ObjectParameter("image", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("addproduct", nameParameter, priceParameter, idcategoryParameter, imageParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> top10bestsell()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("top10bestsell");
+        }
+    
+        public virtual int updateimageproduct(Nullable<int> id, string image)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var imageParameter = image != null ?
+                new ObjectParameter("image", image) :
+                new ObjectParameter("image", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("updateimageproduct", idParameter, imageParameter);
         }
     }
 }
