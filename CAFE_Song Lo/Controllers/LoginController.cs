@@ -19,7 +19,7 @@ namespace CAFE_Song_Lo.Controllers
         {
             using (QuanLyCafeEntities db = new QuanLyCafeEntities())
             {
-                var search = db.accounts.ToList().Where(x => x.username == user.username).FirstOrDefault();
+                var search = db.accounts.ToList().Where(x => x.username == user.username && x.password == user.password).FirstOrDefault();
                 if (search != null)
                 {
                     Session["type"] = search.type;
