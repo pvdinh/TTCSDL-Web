@@ -41,6 +41,22 @@ namespace CAFE_Song_Lo.Areas.admin.Controllers
                     x.datecheckin = DateTime.Now;
                     db.SaveChanges();
                 }
+                else
+                {
+                    using (QuanLyCafeEntities dbb = new QuanLyCafeEntities())
+                    {
+                        List<listIncart> listproduct = new List<listIncart>();
+                        cartfood.allbillinfos = dbb.billinfoes.ToList();
+                        foreach (billinfo item in cartfood.allbillinfos)
+                        {
+                            if (item.idbill == int.Parse(Session["idbill"].ToString()))
+                            {
+                                listproduct.Add(new listIncart(item.idfood,item.idbill,item.count));
+                            }
+                        }
+                        Session["listproduct"] = listproduct;
+                    }
+                }
 
             }
 

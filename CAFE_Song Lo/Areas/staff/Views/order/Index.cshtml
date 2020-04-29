@@ -14,8 +14,12 @@
 {
     <script type="text/javascript">toastr.warning('Xin mời chọn món trước khi xác nhận.', 'Thông báo');</script>
 }
+@if (ViewBag.temp == 4)
+{
+    <script type="text/javascript">toastr.warning('Xin mời chọn món trước khi thanh toán.', 'Thông báo');</script>
+}
 <div class="oderitem">
-    <div class="tableoder">
+    <div class="tableoder" id="cartt">
         <header>
             <h2>Chọn đồ Bàn @ViewBag.idtable :</h2><h3>@DateTime.Now.ToShortDateString() @DateTime.Now.ToLongTimeString()</h3>
         </header>
@@ -28,30 +32,31 @@
             <a href="/staff/home/index?id=@ViewBag.idtable&temp=1" style="text-decoration:none;">
                 <button class="confirm">Xác Nhận</button>
             </a>
-            <a href="/staff/home/bill?id=@ViewBag.idtable&temp=2" style="text-decoration:none;"> <button class="bill">In hoá đơn và Thanh Toán</button></a>
+            <a href="/staff/home/bill?id=@ViewBag.idtable&temp=2" style="text-decoration:none;" onclick="return confirm('Bạn có xác nhận thanh toán ??');"> <button class="bill">In hoá đơn và Thanh Toán</button></a>
 
         </div>
     </div>
     <div class="category">
-        <div style="width: 100%; background-color: whitesmoke;padding: 30px;">
+        <div style="width: 240px; background-color: whitesmoke;padding: 30px;position: fixed;">
             <span style="font-size: 20px;">Hạng mục món ăn.<br /></span>
-            <a href="#caphe" class="categoryitem">CÀ PHÊ<br /></a>
-            <a href="#tramacchiato" class="categoryitem">TRÀ & MACCHIATO<br /></a>
-            <a href="#daxay" class="categoryitem">THỨC UỐNG ĐÁ XAY<br /></a>
-            <a href="#traicay" class="categoryitem">THỨC UỐNG TRÁI CÂY<br /></a>
-            <a href="#snack" class="categoryitem">BÁNH & SNACK</a>
+            <a href="#" id="all" class="categoryitem">All<br /></a>
+            <a href="#" id="caphe" class="categoryitem">CÀ PHÊ<br /></a>
+            <a href="#" id="tramacchiato" class="categoryitem" >TRÀ & MACCHIATO<br /></a>
+            <a href="#" id="daxay" class="categoryitem">THỨC UỐNG ĐÁ XAY<br /></a>
+            <a href="#" id="traicay" class="categoryitem">THỨC UỐNG TRÁI CÂY<br /></a>
+            <a href="#" id="snack" class="categoryitem">BÁNH & SNACK</a><br>
+            <a href="#cartt" class="categoryitem">BACK TO TOP</a>
         </div>
-
     </div>
 </div>
 <div class="productitem">
     <div class="listproduct">
         <div class="container-fluid pl-4 mb-2">
-            <span class="categoryname" id="caphe">Cà phê</span>
+            <span class="categoryname caphe" id="caphe">Cà phê</span>
         </div>
         @foreach (var item in Model.allfoods.Where(s => s.idcategory == 1))
         {
-            <div class="product_Item">
+            <div class="product_Item caphe">
                 <div class="productImage">
                     <a data-ajax="true" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#cart"
                        href="/staff/order/cartt/@item.id"><img src="~/assets/image/icon/cà phê/@item.image" alt="@item.name" /></a>
@@ -65,12 +70,12 @@
         }
 
         <div class="container-fluid pl-4 mb-2">
-            <span class="categoryname" id="tramacchiato">TRÀ & MACCHIATO</span>
+            <span class="categoryname tramacchiato" id="tramacchiato">TRÀ & MACCHIATO</span>
         </div>
 
         @foreach (var item in Model.allfoods.Where(s => s.idcategory == 2))
         {
-            <div class="product_Item">
+            <div class="product_Item tramacchiato">
                 <div class="productImage">
                     <a data-ajax="true" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#cart"
                        href="/staff/order/cartt/@item.id"><img src="~/assets/image/icon/trà & macchiato/@item.image" alt="@item.name" /></a>
@@ -84,12 +89,12 @@
         }
 
         <div class="container-fluid pl-4 mb-2">
-            <span class="categoryname" id="daxay">THỨC UỐNG ĐÁ XAY</span>
+            <span class="categoryname daxay" id="daxay">THỨC UỐNG ĐÁ XAY</span>
         </div>
 
         @foreach (var item in Model.allfoods.Where(s => s.idcategory == 3))
         {
-            <div class="product_Item">
+            <div class="product_Item daxay">
                 <div class="productImage">
                     <a data-ajax="true" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#cart"
                        href="/staff/order/cartt/@item.id"><img src="~/assets/image/icon/thức uống đá xay/@item.image" alt="@item.name" /></a>
@@ -103,11 +108,11 @@
         }
 
         <div class="container-fluid pl-4 mb-2">
-            <span class="categoryname" id="traicay">THỨC UỐNG TRÁI CÂY</span>
+            <span class="categoryname traicay" id="traicay">THỨC UỐNG TRÁI CÂY</span>
         </div>
         @foreach (var item in Model.allfoods.Where(s => s.idcategory == 4))
         {
-            <div class="product_Item">
+            <div class="product_Item traicay">
                 <div class="productImage">
                     <a data-ajax="true" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#cart"
                        href="/staff/order/cartt/@item.id"><img src="~/assets/image/icon/thức uống trái cây/@item.image" alt="@item.name" /></a>
@@ -121,12 +126,12 @@
         }
 
         <div class="container-fluid pl-4 mb-2">
-            <span class="categoryname" id="snack">BÁNH VÀ SNACK</span>
+            <span class="categoryname snack" id="snack">BÁNH VÀ SNACK</span>
         </div>
 
         @foreach (var item in Model.allfoods.Where(s => s.idcategory == 5))
         {
-            <div class="product_Item">
+            <div class="product_Item snack">
                 <div class="productImage">
                     <a data-ajax="true" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#cart"
                        href="/staff/order/cartt/@item.id"><img src="~/assets/image/icon/bánh & snack/@item.image" alt="@item.name" /></a>
@@ -143,3 +148,28 @@
     </div>
 </div>
 
+<script>
+    $("#all").click(function () {
+        $(".tramacchiato ,.daxay ,.traicay, .snack,.caphe").show();
+    })
+    $("#caphe").click(function () {
+        $(".tramacchiato ,.daxay ,.traicay, .snack").hide();
+        $(".caphe").show();
+    })
+    $("#tramacchiato").click(function () {
+        $(".caphe, .daxay, .traicay, .snack").hide();
+        $(".tramacchiato").show();
+    })
+    $("#daxay").click(function () {
+        $(".tramacchiato ,.caphe ,.traicay, .snack").hide();
+        $(".daxay").show();
+    })
+    $("#traicay").click(function () {
+        $(".tramacchiato ,.daxay, .caphe, .snack").hide();
+        $(".traicay").show();
+    })
+    $("#snack").click(function () {
+        $(".tramacchiato ,.daxay, .traicay, .caphe").hide();
+        $(".snack").show();
+    })
+</script>
