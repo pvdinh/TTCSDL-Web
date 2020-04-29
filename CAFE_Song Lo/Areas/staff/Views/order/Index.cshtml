@@ -41,7 +41,7 @@
             <span style="font-size: 20px;">Hạng mục món ăn.<br /></span>
             <a href="#" id="all" class="categoryitem">All<br /></a>
             <a href="#" id="caphe" class="categoryitem">CÀ PHÊ<br /></a>
-            <a href="#" id="tramacchiato" class="categoryitem" >TRÀ & MACCHIATO<br /></a>
+            <a href="#" id="tramacchiato" class="categoryitem">TRÀ & MACCHIATO<br /></a>
             <a href="#" id="daxay" class="categoryitem">THỨC UỐNG ĐÁ XAY<br /></a>
             <a href="#" id="traicay" class="categoryitem">THỨC UỐNG TRÁI CÂY<br /></a>
             <a href="#" id="snack" class="categoryitem">BÁNH & SNACK</a><br>
@@ -172,4 +172,7 @@
         $(".tramacchiato ,.daxay, .traicay, .caphe").hide();
         $(".snack").show();
     })
+    window.location.hash = "can't-go-back";
+    window.location.hash = "can't-go-back";//again because google chrome don't insert first hash into history
+    window.onhashchange = function () { window.location.hash = "can't-go-back"; }
 </script>

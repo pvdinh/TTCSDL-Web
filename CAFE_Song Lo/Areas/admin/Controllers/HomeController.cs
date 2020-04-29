@@ -33,7 +33,7 @@ namespace CAFE_Song_Lo.Areas.admin.Controllers
             //trường hợp chọn thêm món mà chưa xác nhận sẽ không được tính
             if (id == null && temp == null && Session["idbill"] != null)
             {
-                ViewBag.temp = 0; //toastr đổi món thành công
+                ViewBag.temp = 3; //toastr thông báo món ăn ko thay đổi
                 List<listIncart> listproduct = new List<listIncart>();
                 listproduct = (List<listIncart>)Session["listproduct"];
                 //listproduct là danh sách trước khi chịn thêm món
