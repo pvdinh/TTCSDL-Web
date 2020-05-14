@@ -66,8 +66,8 @@
                             <a data-ajax="true" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#cart" href="/admin/order/cartt/@item.ID"><button class="btn btn-default" type="button"><i class="fa fas fa-plus"></i></button></a>
                         </div>
                     </th>
-                    <th>@item.PRICE</th>
-                    <th>@item.totalmoney()</th>
+                    <th>@string.Format("{0:0,0}", item.PRICE)</th>
+                    <th>@string.Format("{0:0,0}", item.totalmoney())</th>
                     <th>
                         <a data-ajax="true" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#cart" href="/admin/order/delproduct/@item.ID" style="color:black;"
                            onmouseover="this.style.color='red'">Delete</a>
@@ -78,4 +78,4 @@
         }
     </tbody>
 </table>
-<div style="text-align:right;color:black;font-weight:bolder;">Tổng : @tongtien</div>
+<div style="text-align:right;color:black;font-weight:bolder;">Tổng : @string.Format("{0:0,0}", tongtien)</div>

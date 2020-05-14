@@ -4,13 +4,17 @@
     ViewBag.Title = "product";
     Layout = "~/Areas/admin/Views/Shared/_Layout.cshtml";
 }
-    <title>product</title>
+<title>product</title>
 <link href="~/assets/product/product.css" rel="stylesheet" />
 <link href="~/assets/product/labelproduct.css" rel="stylesheet" />
+<!-- các nút tuỳ chọn -->
 <div class="toptable">
     <div class="bestsell">Bán chạy</div>
     <div class="allsell">Toàn bộ</div>
 </div>
+
+<!-- các nút tuỳ chọn END -->
+<!-- hiển thị danh sách sản phẩm -->
 <div class="productitem">
     <div class="listproduct">
         <div class="container-fluid pl-4 mb-2">
@@ -226,6 +230,7 @@
 
     </div>
 </div>
+<!-- hiển thị danh sách sản phẩm END -->
 <script>
     $(".bestsell").click(function () {
         $(".nobox").hide();
