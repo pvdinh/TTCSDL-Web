@@ -1,0 +1,79 @@
+﻿@model CAFE_Song_Lo.Models.SupplierData
+@using PagedList.Mvc
+@{
+    ViewBag.Title = "supplier";
+    Layout = "~/Areas/admin/Views/Shared/_Layout.cshtml";
+}
+@{
+    int i = 0;
+}
+
+    <link href="~/Content/PagedList.css" rel="stylesheet" />
+    <div class="rightbody">
+        <div class="container p-2"
+             style="color: var(--color3);text-align: center;">
+            <h3>Danh sách nhà cung cấp</h3>
+        </div>
+        <form action="/admin/home/setting" method="get">
+            <div class="container">
+                <div class="input-group col-md-4 mb-2" style="padding-left:0px;">
+                    @{if (ViewBag.search != null && string.Compare(ViewBag.search, "", true) != 0)
+                        {
+                            <input class="form-control py-2" type="search" value="@ViewBag.search" id="example-search-input" name="searchstring">
+                        }
+                        else
+                        {
+                            <input class="form-control py-2" type="search" placeholder="search by name" id="example-search-input" name="searchstring">
+                        }
+                    }
+                    <span class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="submit">
+                            <i class="fa fa-search"> Search</i>
+                        </button>
+                    </span>
+                </div>
+                <div class="container" style="text-align:left;padding-left:0px; margin-bottom:10px;">
+                    <select class="form-control" name="status" style="width: 355px;margin-left: 0px;" id="status">
+                        <option value="Status">Status</option>
+                        <option value="Hoạt động">Hoạt động</option>
+                        <option value="Ngưng hoạt động">Ngưng hoạt động</option>
+                    </select>
+                </div>
+
+            </div>
+        </form>
+        <div class="container-fluid px-5" style="overflow-x: auto;">
+
+            <table class="table table-bordered table-sm table-hover">
+                <thead class="thead-light">
+                    <tr style="line-height:50px;">
+                        <th>ID </th>
+                        <th>Tên NCC</th>
+                        <th>Địa chỉ</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Tổng tiền</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.nhapsanphamFromNCC)
+                    {
+                        <tr style="line-height:30px;">
+                            <td>@item.id</td>
+                            <td>@item.ten</td>
+                            <td>@item.diachi</td>
+                            <td>@item.email</td>
+                            <td>@item.phone</td>
+                            <td>@Model.listnamesanpham[i]</td>
+                            <td>@Model.listallmoneynhapsanphams[i]</td>
+                        </tr>
+                        i++;
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+<br />
+Page @(Model.nhapsanphamFromNCC.PageCount < Model.nhapsanphamFromNCC.PageNumber ? 0 : Model.nhapsanphamFromNCC.PageNumber)/@Model.nhapsanphamFromNCC.PageCount
+@Html.PagedListPager(Model.nhapsanphamFromNCC, page => Url.Action("supplier", new { page }))

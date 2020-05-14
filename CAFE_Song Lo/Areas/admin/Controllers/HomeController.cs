@@ -24,7 +24,7 @@ namespace CAFE_Song_Lo.Areas.admin.Controllers
                     {
                         //nếu không tìm thấy billinfo của bill thì thông báo chưa chọn món.
                         //3 là trạng thái gửi sang page order 
-                        return RedirectToAction("index", "order", new { id = id , status = 3 });
+                        return RedirectToAction("index", "order", new { id = id, status = 3 });
                     }
                 }
 
@@ -88,6 +88,27 @@ namespace CAFE_Song_Lo.Areas.admin.Controllers
             int pagenumber = page ?? 1;
             ViewBag.count = db.staffs.ToList().Count();
             return View(data.allstaffs.ToPagedList(pagenumber, pageSize));
+        }
+        public ActionResult supplier(int? page)
+        {
+            SupplierData data = new SupplierData();
+            int pageSize = 10;
+            int pagenumber = page ?? 1;
+            //data.allnhacungcaps = db.nhacungcaps.ToList();
+            List<nhacungcap> listNCC = db.nhacungcaps.ToList();
+            ViewBag.count = listNCC.Count();
+            data.nhapsanphamFromNCC = db.nhacungcaps.ToList().ToPagedList(pagenumber, pageSize);
+            data.listnamesanpham = new List<string>();
+            data.listallmoneynhapsanphams = new List<string>();
+            foreach (var item in data.nhapsanphamFromNCC)
+                using (QuanLyCafeEntities cfdb = new QuanLyCafeEntities())
+                {
+                    var sp = cfdb.nhapsanphams.ToList().Where(s => s.idncc == item.id).FirstOrDefault();
+                    data.listnamesanpham.Add(sp.tensanpham);
+                    data.listallmoneynhapsanphams.Add(sp.tongtien.ToString());
+                }
+
+            return View(data);
         }
 
         public ActionResult receipt(int? page)
@@ -223,7 +244,7 @@ namespace CAFE_Song_Lo.Areas.admin.Controllers
                 }
                 if (tongtien == 0)
                 {
-                    return RedirectToAction("index", "order", new { id = id ,status = 4 });
+                    return RedirectToAction("index", "order", new { id = id, status = 4 });
                 }
                 else
                 {
