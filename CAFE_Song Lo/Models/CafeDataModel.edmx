@@ -238,6 +238,7 @@
         <Function Name="empty_table" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id" Type="int" Mode="In" />
         </Function>
+        <Function Name="get_receipt" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="top10bestsell" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="updateimageproduct" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id" Type="int" Mode="In" />
@@ -551,6 +552,7 @@
             <Parameter Name="id" Mode="In" Type="Int32" />
             <Parameter Name="image" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="get_receipt" ReturnType="Collection(QuanLyCafeModel.get_receipt_Result)" />
         </EntityContainer>
         <EntityType Name="staff_audit">
           <Key>
@@ -595,6 +597,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="get_receipt_Result">
+          <Property Type="Int32" Name="id" Nullable="false" />
+          <Property Type="DateTime" Name="datecheckout" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="idaccount" Nullable="false" />
+          <Property Type="Int32" Name="idtable" Nullable="false" />
+          <Property Type="Double" Name="Tongtien" Nullable="true" />
+          <Property Type="String" Name="type" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="name" Nullable="true" MaxLength="50" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -719,6 +730,19 @@
           <FunctionImportMapping FunctionImportName="addproduct" FunctionName="QuanLyCafeModel.Store.addproduct" />
           <FunctionImportMapping FunctionImportName="top10bestsell" FunctionName="QuanLyCafeModel.Store.top10bestsell" />
           <FunctionImportMapping FunctionImportName="updateimageproduct" FunctionName="QuanLyCafeModel.Store.updateimageproduct" />
+          <FunctionImportMapping FunctionImportName="get_receipt" FunctionName="QuanLyCafeModel.Store.get_receipt">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="QuanLyCafeModel.get_receipt_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="datecheckout" ColumnName="datecheckout" />
+                <ScalarProperty Name="idaccount" ColumnName="idaccount" />
+                <ScalarProperty Name="idtable" ColumnName="idtable" />
+                <ScalarProperty Name="Tongtien" ColumnName="Tongtien" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

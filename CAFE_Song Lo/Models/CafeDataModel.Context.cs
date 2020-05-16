@@ -270,5 +270,10 @@ namespace CAFE_Song_Lo.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("updateimageproduct", idParameter, imageParameter);
         }
+    
+        public virtual ObjectResult<get_receipt_Result> get_receipt()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<get_receipt_Result>("get_receipt");
+        }
     }
 }
