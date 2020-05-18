@@ -1,0 +1,127 @@
+﻿@using PagedList.Mvc;
+@using PagedList;
+@model IPagedList<CAFE_Song_Lo.Models.get_receipt_Result>
+
+@{
+    ViewBag.Title = "Setting";
+    Layout = "~/Areas/admin/Views/Shared/_Layout.cshtml";
+}
+@{
+    int i = 0;
+}
+<title>Receipt</title>
+<link href="~/Content/PagedList.css" rel="stylesheet" />
+<link href="~/assets/Setting/setting.css" rel="stylesheet" />
+<link href="~/Content/datepicker.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+<div class="rightbody">
+    <div class="container p-2"
+         style="color: var(--color3);text-align: center;">
+        <h3>Danh sách Phiếu Thu.</h3>
+    </div>
+
+    <div class="container-fluid px-5" style="overflow-x: auto;">
+        <div class="container">
+            <form action="/admin/receipt/index" method="get" id="formsearch">
+                @if (Session["search"] == null || string.Compare(Session["search"].ToString(), "", true) == 0)
+                {
+                    <input class="form-control" id="listname" autocomplete="off" type="text" placeholder="Search by name staff" style="display:inline;width: 300px;" name="search">
+                }
+                else
+                {
+                    <input class="form-control" id="listname" autocomplete="off" type="text" value="@Session["search"]" style="display:inline;width: 300px;" name="search">
+                }
+
+                <input type="text" id="search-date-from" class="form-control" placeholder="Từ ngày" style="margin-left:10px;" name="mindatee" autocomplete="off">
+                <span id="picker">to</span>
+                <input type="text" id="search-date-to" class="form-control" placeholder="Đến ngày" style="margin-right:10px;" name="maxdatee" autocomplete="off">
+                <select class="form-control" style="width: 200px;margin-left: 0px; display:inline;" onchange="window.location = this.value">
+                    <option value="Status">Sắp xếp theo giá</option>
+                    <option value="/admin/receipt/index?type=tang&search=@Session["search"]&mindatee=@Session["min"]&maxdatee=@Session["max"]">Tăng dần</option>
+                    <option value="/admin/receipt/index?type=giam&search=@Session["search"]&mindatee=@Session["min"]&maxdatee=@Session["max"]">Giảm dần</option>
+                </select>
+                <a class="btn btn-outline-secondary" style="vertical-align:baseline;" onclick="document.getElementById('formsearch').submit();">
+                    <i class="fa fa-search" aria-hidden="true"> Search</i>
+                </a>
+            </form>
+
+        </div>
+
+        <table class="table table-bordered table-sm table-hover">
+            <thead class="thead-light">
+                <tr style="line-height:50px;">
+                    <th>ID Hoá đơn</th>
+                    <th>ID account</th>
+                    <th>Người thu ngân</th>
+                    <th>ID table</th>
+                    <th>Tống tiền</th>
+                    <th>Thời gian thanh toán</th>
+                    <th>Chức vụ</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr style="line-height:30px;">
+                        <td>@item.id</td>
+                        <td>@item.idaccount</td>
+                        <td>@item.name</td>
+                        <td>@item.idtable</td>
+                        <td>@string.Format("{0:0,0}", item.Tongtien) đ</td>
+                        <td>@item.datecheckout</td>
+                        <td>@item.type</td>
+                    </tr>
+                    i++;
+                }
+            </tbody>
+        </table>
+        <div class="alert alert-info summany-info clearfix" role="alert">
+            <div class="sm-info pull-left padd-0" style="text-align:left;">
+                Tổng phiếu thu: <span style="color:red;">@ViewBag.count .</span>
+                Tổng tiền: <span style="color:red;">@string.Format("{0:0,0}", ViewBag.Tongtien) đ.</span>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<script>
+    $('#search-date-from').datetimepicker({
+        timepicker: false,
+        datepicker: true,
+        format: 'd-m-Y',
+        week: true
+    })
+    $('#search-date-to').datetimepicker({
+        timepicker: false,
+        datepicker: true,
+        format: 'd-m-Y',
+        week: true
+    })
+</script>
+
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)/@Model.PageCount
+        @Html.PagedListPager(Model, page => Url.Action("index", new { page, search = Session["search"], type = Session["typesort"], mindatee =Session["min"],maxdatee=Session["max"] }))
+        @if (string.Compare(ViewBag.status, "Status", true) != 0)
+        {
+            <script>
+                        $("#status option[value='@ViewBag.status']").prop("selected", "selected");
+            </script>
+        }
+        <!--==================== jquery UI ===========================-->
+        <script src="~/Scripts/jquery-ui-1.12.1.js"></script>
+        <link href="~/Content/themes/base/autocomplete.css" rel="stylesheet" />
+        <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+        <script type="text/javascript">
+            $('.date').datepicker({ dateFormat: "YYYY-MM-DD HH:mm" });
+            $(function () {
+                $("#listname").autocomplete({
+                    source: '/admin/receipt/listname',
+                    select: function (event, ui) {
+                        window.location.href = '#';
+                    }
+                });
+            });
+        </script>
+        <!--==================== jquery UI END ===========================-->

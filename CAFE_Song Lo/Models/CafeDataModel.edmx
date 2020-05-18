@@ -196,6 +196,12 @@
           <Parameter Name="idfood" Type="int" Mode="In" />
           <Parameter Name="count" Type="int" Mode="In" />
         </Function>
+        <Function Name="add_product" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="name" Type="nvarchar" Mode="In" />
+          <Parameter Name="price" Type="float" Mode="In" />
+          <Parameter Name="idcategory" Type="int" Mode="In" />
+          <Parameter Name="image" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="addproduct" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="name" Type="nvarchar" Mode="In" />
           <Parameter Name="price" Type="float" Mode="In" />
@@ -232,13 +238,27 @@
           <Parameter Name="idfood" Type="int" Mode="In" />
           <Parameter Name="idbill" Type="int" Mode="In" />
         </Function>
+        <Function Name="delete_product" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idproduct" Type="int" Mode="In" />
+        </Function>
         <Function Name="deletestaffaccount" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id" Type="int" Mode="In" />
         </Function>
         <Function Name="empty_table" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id" Type="int" Mode="In" />
         </Function>
+        <Function Name="get_info_product" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idproduct" Type="int" Mode="In" />
+        </Function>
+        <Function Name="get_receipt" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="top10bestsell" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="update_product" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idproduct" Type="int" Mode="In" />
+          <Parameter Name="name" Type="nvarchar" Mode="In" />
+          <Parameter Name="price" Type="float" Mode="In" />
+          <Parameter Name="idcategory" Type="int" Mode="In" />
+          <Parameter Name="image" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="updateimageproduct" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id" Type="int" Mode="In" />
           <Parameter Name="image" Type="nvarchar" Mode="In" />
@@ -551,6 +571,26 @@
             <Parameter Name="id" Mode="In" Type="Int32" />
             <Parameter Name="image" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="get_receipt" ReturnType="Collection(QuanLyCafeModel.get_receipt_Result)" />
+          <FunctionImport Name="add_product">
+            <Parameter Name="name" Mode="In" Type="String" />
+            <Parameter Name="price" Mode="In" Type="Double" />
+            <Parameter Name="idcategory" Mode="In" Type="Int32" />
+            <Parameter Name="image" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="delete_product">
+          <Parameter Name="idproduct" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="get_info_product" ReturnType="Collection(QuanLyCafeModel.get_info_product_Result)">
+          <Parameter Name="idproduct" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="update_product">
+            <Parameter Name="idproduct" Mode="In" Type="Int32" />
+            <Parameter Name="name" Mode="In" Type="String" />
+            <Parameter Name="price" Mode="In" Type="Double" />
+            <Parameter Name="idcategory" Mode="In" Type="Int32" />
+            <Parameter Name="image" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="staff_audit">
           <Key>
@@ -595,6 +635,23 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="get_receipt_Result">
+          <Property Type="Int32" Name="id" Nullable="false" />
+          <Property Type="DateTime" Name="datecheckout" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="idaccount" Nullable="false" />
+          <Property Type="Int32" Name="idtable" Nullable="false" />
+          <Property Type="Double" Name="Tongtien" Nullable="true" />
+          <Property Type="String" Name="type" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="name" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="get_info_product_Result">
+          <Property Type="Int32" Name="id" Nullable="false" />
+          <Property Type="String" Name="name" Nullable="true" MaxLength="50" />
+          <Property Type="Double" Name="price" Nullable="false" />
+          <Property Type="Int32" Name="idcategory" Nullable="false" />
+          <Property Type="String" Name="image" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="nameCg" Nullable="true" MaxLength="50" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -719,6 +776,34 @@
           <FunctionImportMapping FunctionImportName="addproduct" FunctionName="QuanLyCafeModel.Store.addproduct" />
           <FunctionImportMapping FunctionImportName="top10bestsell" FunctionName="QuanLyCafeModel.Store.top10bestsell" />
           <FunctionImportMapping FunctionImportName="updateimageproduct" FunctionName="QuanLyCafeModel.Store.updateimageproduct" />
+          <FunctionImportMapping FunctionImportName="get_receipt" FunctionName="QuanLyCafeModel.Store.get_receipt">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="QuanLyCafeModel.get_receipt_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="datecheckout" ColumnName="datecheckout" />
+                <ScalarProperty Name="idaccount" ColumnName="idaccount" />
+                <ScalarProperty Name="idtable" ColumnName="idtable" />
+                <ScalarProperty Name="Tongtien" ColumnName="Tongtien" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="add_product" FunctionName="QuanLyCafeModel.Store.add_product" />
+          <FunctionImportMapping FunctionImportName="delete_product" FunctionName="QuanLyCafeModel.Store.delete_product" />
+          <FunctionImportMapping FunctionImportName="get_info_product" FunctionName="QuanLyCafeModel.Store.get_info_product">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="QuanLyCafeModel.get_info_product_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="idcategory" ColumnName="idcategory" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="nameCg" ColumnName="nameCg" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="update_product" FunctionName="QuanLyCafeModel.Store.update_product" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
