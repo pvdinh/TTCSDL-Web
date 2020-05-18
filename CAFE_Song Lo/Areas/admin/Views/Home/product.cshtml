@@ -11,6 +11,7 @@
 <div class="toptable">
     <div class="bestsell">Bán chạy</div>
     <div class="allsell">Toàn bộ</div>
+    <div data-toggle="modal" data-target="#exampleModal">Thêm mới sản phẩm</div>
 </div>
 
 <!-- các nút tuỳ chọn END -->
@@ -34,7 +35,7 @@
                         <div class="product_info">
                             <h3 id="product_name"><a href="#">@item.name</a></h3>
                             <p id="product_price">@item.price đ</p>
-                            <div><a href="#" id="detail_btn">Thông tin</a></div>
+                            <div><a href="/admin/product/index/@item.id" id="detail_btn">Thông tin</a></div>
                         </div>
                     </div>
                     break;
@@ -50,7 +51,7 @@
                             <div class="product_info">
                                 <h3 id="product_name"><a href="#">@item.name</a></h3>
                                 <p id="product_price">@item.price đ</p>
-                                <div><a href="#" id="detail_btn">Thông tin</a></div>
+                                <div><a href="/admin/product/index/@item.id" id="detail_btn">Thông tin</a></div>
                             </div>
                         </div>
                     }
@@ -75,7 +76,7 @@
                         <div class="product_info">
                             <h3 id="product_name"><a href="#">@item.name</a></h3>
                             <p id="product_price">@item.price đ</p>
-                            <div><a href="#" id="detail_btn">Thông tin</a></div>
+                            <div><a href="/admin/product/index/@item.id" id="detail_btn">Thông tin</a></div>
                         </div>
                     </div>
                     break;
@@ -91,7 +92,7 @@
                             <div class="product_info">
                                 <h3 id="product_name"><a href="#">@item.name</a></h3>
                                 <p id="product_price">@item.price đ</p>
-                                <div><a href="#" id="detail_btn">Thông tin</a></div>
+                                <div><a href="/admin/product/index/@item.id" id="detail_btn">Thông tin</a></div>
                             </div>
                         </div>
                     }
@@ -240,3 +241,39 @@
     });
 </script>
 
+<form action="/admin/product/add" method="get">
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Thêm sản phẩm mới</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <label>Tên</label>
+                    <input class="form-control my-3" name="name" />
+                    <label>Giá</label>
+                    <input class="form-control my-3" name="price" />
+                    <label>ID hạng mục</label>
+                    <input class="form-control my-3" name="idcategory" />
+                    <select class="form-control" style="margin-bottom:10px;">
+                        <option>Danh sách hạng mục</option>
+                        @foreach (var item in ViewBag.list)
+                        {
+                            <option disabled="disabled">@item.id - @item.name</option>
+                        }
+                    </select>
+                    <label>Tên ảnh (.jpg .png )</label>
+                    <input class="form-control my-3" name="image" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Add product</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>>

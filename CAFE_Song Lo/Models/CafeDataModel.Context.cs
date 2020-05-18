@@ -275,5 +275,69 @@ namespace CAFE_Song_Lo.Models
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<get_receipt_Result>("get_receipt");
         }
+    
+        public virtual int add_product(string name, Nullable<double> price, Nullable<int> idcategory, string image)
+        {
+            var nameParameter = name != null ?
+                new ObjectParameter("name", name) :
+                new ObjectParameter("name", typeof(string));
+    
+            var priceParameter = price.HasValue ?
+                new ObjectParameter("price", price) :
+                new ObjectParameter("price", typeof(double));
+    
+            var idcategoryParameter = idcategory.HasValue ?
+                new ObjectParameter("idcategory", idcategory) :
+                new ObjectParameter("idcategory", typeof(int));
+    
+            var imageParameter = image != null ?
+                new ObjectParameter("image", image) :
+                new ObjectParameter("image", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("add_product", nameParameter, priceParameter, idcategoryParameter, imageParameter);
+        }
+    
+        public virtual int delete_product(Nullable<int> idproduct)
+        {
+            var idproductParameter = idproduct.HasValue ?
+                new ObjectParameter("idproduct", idproduct) :
+                new ObjectParameter("idproduct", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("delete_product", idproductParameter);
+        }
+    
+        public virtual ObjectResult<get_info_product_Result> get_info_product(Nullable<int> idproduct)
+        {
+            var idproductParameter = idproduct.HasValue ?
+                new ObjectParameter("idproduct", idproduct) :
+                new ObjectParameter("idproduct", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<get_info_product_Result>("get_info_product", idproductParameter);
+        }
+    
+        public virtual int update_product(Nullable<int> idproduct, string name, Nullable<double> price, Nullable<int> idcategory, string image)
+        {
+            var idproductParameter = idproduct.HasValue ?
+                new ObjectParameter("idproduct", idproduct) :
+                new ObjectParameter("idproduct", typeof(int));
+    
+            var nameParameter = name != null ?
+                new ObjectParameter("name", name) :
+                new ObjectParameter("name", typeof(string));
+    
+            var priceParameter = price.HasValue ?
+                new ObjectParameter("price", price) :
+                new ObjectParameter("price", typeof(double));
+    
+            var idcategoryParameter = idcategory.HasValue ?
+                new ObjectParameter("idcategory", idcategory) :
+                new ObjectParameter("idcategory", typeof(int));
+    
+            var imageParameter = image != null ?
+                new ObjectParameter("image", image) :
+                new ObjectParameter("image", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("update_product", idproductParameter, nameParameter, priceParameter, idcategoryParameter, imageParameter);
+        }
     }
 }

@@ -86,6 +86,8 @@ namespace CAFE_Song_Lo.Areas.admin.Controllers
         {
             data.top10sell = db.top10bestsell().ToList();
             data.allfoods = db.foods.ToList();
+            List<category> listcategory = db.categories.ToList();
+            ViewBag.list = listcategory;
             return View(data);
         }
         [HttpGet]
