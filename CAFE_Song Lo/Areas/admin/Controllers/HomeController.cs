@@ -37,7 +37,7 @@ namespace CAFE_Song_Lo.Areas.admin.Controllers
                 List<listIncart> listproduct = new List<listIncart>();
                 listproduct = (List<listIncart>)Session["listproduct"];
                 //listproduct là danh sách trước khi chịn thêm món
-                //listproduct1 là danh sách sau khi chịn thêm món
+                //listproductbefore là danh sách sau khi chịn thêm món
                 using (QuanLyCafeEntities dbb = new QuanLyCafeEntities())
                 {
                     List<listIncart> listproductbefore = new List<listIncart>();
@@ -124,7 +124,7 @@ namespace CAFE_Song_Lo.Areas.admin.Controllers
 
             int pageSize = 5;
             int pagenumber = page ?? 1;
-            ViewBag.count = db.staffs.ToList().Count();
+            ViewBag.count = db.staffs.OrderByDescending(s => s.idaccount).Take(1).Select(s => s.idaccount).FirstOrDefault() + 1;
             return View(data.allstaffs.ToPagedList(pagenumber, pageSize));
         }
 
@@ -136,14 +136,14 @@ namespace CAFE_Song_Lo.Areas.admin.Controllers
             ViewBag.editstaff = x;
             return View();
         }
-        public ActionResult deletestaff(int id)
+        public ActionResult deletestaff(int? id)
         {
             using (QuanLyCafeEntities db = new QuanLyCafeEntities())
             {
                 try
                 {
-                    data.allstaffs = db.staffs.ToList();
-                    db.deletestaffaccount(id);
+                    //db.deletestaffaccount(id);
+                    db.Database.ExecuteSqlCommand("deletestaffaccount @id", new SqlParameter ("id", id ));
                 }
                 catch
                 {
@@ -171,8 +171,7 @@ namespace CAFE_Song_Lo.Areas.admin.Controllers
         {
             using (QuanLyCafeEntities db = new QuanLyCafeEntities())
             {
-                data.allstaffs = db.staffs.ToList();
-                int idaccount = data.allstaffs[data.allstaffs.Count() - 1].idaccount + 1;
+                int idaccount = db.staffs.OrderByDescending(s => s.idaccount).Take(1).Select(s => s.idaccount).FirstOrDefault() + 1;
                 string username = "user" + idaccount.ToString();
                 string password = "12345678";
                 string type = "staff";
