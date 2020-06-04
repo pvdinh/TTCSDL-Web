@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using CAFE_Song_Lo.Models;
 
-namespace CAFE_Song_Lo.Areas.admin.Controllers
+namespace CAFE_Song_Lo.Areas.staff.Controllers
 {
     public class productController : Controller
     {
@@ -27,7 +27,7 @@ namespace CAFE_Song_Lo.Areas.admin.Controllers
         public ActionResult delete(int? id)
         {
             db.delete_product(id);
-            return RedirectToAction("product", "home", new { area = "admin" });
+            return RedirectToAction("product", "home", new { area = "staff" });
         }
         [HttpPost]
         public ActionResult add(get_info_product_Result data, HttpPostedFileBase file)
