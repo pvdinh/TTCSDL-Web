@@ -195,6 +195,7 @@
     <Compile Include="Models\staff_audit.cs">
       <DependentUpon>CafeDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SupplierData.cs" />
     <Compile Include="Models\tablefood.cs">
       <DependentUpon>CafeDataModel.tt</DependentUpon>
     </Compile>
@@ -334,9 +335,13 @@
     <Content Include="Areas\staff\Views\order\Index.cshtml" />
     <Content Include="Content\toastr.scss" />
     <Content Include="Content\toastr.less" />
+    
+    <Content Include="Areas\admin\Views\Home\receipt.cshtml" />
+    <Content Include="Areas\admin\Views\Home\supplier.cshtml" />
     <Content Include="Areas\admin\Views\receipt\index.cshtml" />
     <Content Include="Areas\admin\Views\product\Index.cshtml" />
     <Content Include="Areas\staff\Views\product\Index.cshtml" />
+
     <None Include="Scripts\jquery-3.5.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.5.0.js" />
     <Content Include="Scripts\jquery-3.5.0.min.js" />
