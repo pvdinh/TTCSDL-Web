@@ -59,6 +59,7 @@ namespace CAFE_Song_Lo.Areas.admin.Controllers
                 }
 
             }
+
             data.allfoods = db.foods.ToList();
             return View(data);
         }
