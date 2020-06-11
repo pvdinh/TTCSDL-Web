@@ -15,6 +15,7 @@ namespace CAFE_Song_Lo.Areas.admin.Controllers
         classdata data = new classdata();
         public ActionResult Index(int? id, int? temp)
         {
+            //taọ 1 toastr thông báo khi chưa chọn món mà bấm xác nhận
             using (QuanLyCafeEntities dbb = new QuanLyCafeEntities())
             {
                 if (Session["idbill"] != null)
@@ -29,8 +30,43 @@ namespace CAFE_Song_Lo.Areas.admin.Controllers
                 }
 
             }
-            if (id != null)
+            //trường hợp chọn thêm món mà chưa xác nhận sẽ không được tính
+            if (id == null && temp == null && Session["idbill"] != null)
             {
+                ViewBag.temp = 3; //toastr thông báo món ăn ko thay đổi
+                List<listIncart> listproduct = new List<listIncart>();
+                listproduct = (List<listIncart>)Session["listproduct"];
+                //listproduct là danh sách trước khi chịn thêm món
+                //listproductbefore là danh sách sau khi chịn thêm món
+                using (QuanLyCafeEntities dbb = new QuanLyCafeEntities())
+                {
+                    List<listIncart> listproductbefore = new List<listIncart>();
+                    classdata cardfood1 = new classdata();
+                    cardfood1.allbillinfos = dbb.billinfoes.ToList();
+                    foreach (billinfo item in cardfood1.allbillinfos)
+                    {
+                        if (item.idbill == int.Parse(Session["idbill"].ToString()))
+                        {
+                            listproductbefore.Add(new listIncart(item.idfood, item.idbill, item.count));
+                        }
+                    }
+                    foreach (var item in listproductbefore)
+                    {
+                        foreach (var item1 in listproduct)
+                        {
+                            if (item1.ID == item.ID && item1.COUNT != item.COUNT)
+                            {
+                                var z = dbb.billinfoes.ToList().Where(s => s.idfood == item.ID && s.idbill == int.Parse(Session["idbill"].ToString())).FirstOrDefault();
+                                z.count = item1.COUNT;
+                                dbb.SaveChanges();
+                            }
+                        }
+                    }
+                }
+            }
+            else if (id != null && temp != null)
+            {
+                //xác nhận đổi món của bàn thành công
                 ViewBag.temp = 0;
             }
             //nếu id != null và bàn trống tức là có bàn yêu cầu xác nhận đặt món
@@ -50,6 +86,8 @@ namespace CAFE_Song_Lo.Areas.admin.Controllers
         {
             data.top10sell = db.top10bestsell().ToList();
             data.allfoods = db.foods.ToList();
+            List<category> listcategory = db.categories.ToList();
+            ViewBag.list = listcategory;
             return View(data);
         }
         [HttpGet]
@@ -86,7 +124,7 @@ namespace CAFE_Song_Lo.Areas.admin.Controllers
 
             int pageSize = 5;
             int pagenumber = page ?? 1;
-            ViewBag.count = db.staffs.ToList().Count();
+            ViewBag.count = db.staffs.OrderByDescending(s => s.idaccount).Take(1).Select(s => s.idaccount).FirstOrDefault() + 1;
             return View(data.allstaffs.ToPagedList(pagenumber, pageSize));
         }
         public ActionResult supplier(int? page)
@@ -111,33 +149,6 @@ namespace CAFE_Song_Lo.Areas.admin.Controllers
             return View(data);
         }
 
-        public ActionResult receipt(int? page)
-        {
-            ReceiptData data = new ReceiptData();
-            int pageSize = 5;
-            int pagenumber = page ?? 1;
-            double? tongtien = 0;
-            List<bill> listbill = db.bills.Where(s => s.Tongtien > 0).ToList();
-            ViewBag.count = listbill.Count();
-            foreach (var item in listbill)
-            {
-                tongtien += item.Tongtien;
-            }
-            ViewBag.Tongtien = tongtien;
-            data.allbills = db.bills.ToList().Where(s => s.Tongtien > 0).ToPagedList(pagenumber, pageSize);
-            data.listnames = new List<string>();
-
-            foreach (var item in data.allbills)
-            {
-                tongtien += item.Tongtien;
-                using (QuanLyCafeEntities dbb = new QuanLyCafeEntities())
-                {
-                    var x = dbb.staffs.ToList().Where(s => s.idaccount == item.idaccount).FirstOrDefault();
-                    data.listnames.Add(x.name);
-                }
-            }
-            return View(data);
-        }
         public ActionResult editstaff(int id)
         {
             classdata edit = new classdata();
@@ -146,14 +157,14 @@ namespace CAFE_Song_Lo.Areas.admin.Controllers
             ViewBag.editstaff = x;
             return View();
         }
-        public ActionResult deletestaff(int id)
+        public ActionResult deletestaff(int? id)
         {
             using (QuanLyCafeEntities db = new QuanLyCafeEntities())
             {
                 try
                 {
-                    data.allstaffs = db.staffs.ToList();
-                    db.deletestaffaccount(id);
+                    //db.deletestaffaccount(id);
+                    db.Database.ExecuteSqlCommand("deletestaffaccount @id", new SqlParameter ("id", id ));
                 }
                 catch
                 {
@@ -181,8 +192,7 @@ namespace CAFE_Song_Lo.Areas.admin.Controllers
         {
             using (QuanLyCafeEntities db = new QuanLyCafeEntities())
             {
-                data.allstaffs = db.staffs.ToList();
-                int idaccount = data.allstaffs[data.allstaffs.Count() - 1].idaccount + 1;
+                int idaccount = db.staffs.OrderByDescending(s => s.idaccount).Take(1).Select(s => s.idaccount).FirstOrDefault() + 1;
                 string username = "user" + idaccount.ToString();
                 string password = "12345678";
                 string type = "staff";

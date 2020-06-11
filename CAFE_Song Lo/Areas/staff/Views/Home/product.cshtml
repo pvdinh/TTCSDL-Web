@@ -7,10 +7,15 @@
 <title>product</title>
 <link href="~/assets/product/product.css" rel="stylesheet" />
 <link href="~/assets/product/labelproduct.css" rel="stylesheet" />
+<!-- các nút tuỳ chọn -->
 <div class="toptable">
     <div class="bestsell">Bán chạy</div>
     <div class="allsell">Toàn bộ</div>
+    <div data-toggle="modal" data-target="#exampleModal">Thêm mới sản phẩm</div>
 </div>
+
+<!-- các nút tuỳ chọn END -->
+<!-- hiển thị danh sách sản phẩm -->
 <div class="productitem">
     <div class="listproduct">
         <div class="container-fluid pl-4 mb-2">
@@ -30,7 +35,7 @@
                         <div class="product_info">
                             <h3 id="product_name"><a href="#">@item.name</a></h3>
                             <p id="product_price">@item.price đ</p>
-                            <div><a href="#" id="detail_btn">Thông tin</a></div>
+                            <div><a href="/staff/product/index/@item.id" id="detail_btn">Thông tin</a></div>
                         </div>
                     </div>
                     break;
@@ -46,7 +51,7 @@
                             <div class="product_info">
                                 <h3 id="product_name"><a href="#">@item.name</a></h3>
                                 <p id="product_price">@item.price đ</p>
-                                <div><a href="#" id="detail_btn">Thông tin</a></div>
+                                <div><a href="/staff/product/index/@item.id" id="detail_btn">Thông tin</a></div>
                             </div>
                         </div>
                     }
@@ -66,12 +71,12 @@
                     <div class="product_Item box" style="width: 200px; height: 377px;">
                         <div class="ribbon"><span>Best Sell</span></div>
                         <div class="productImage">
-                            <a href="#"><img src="~/assets/image/icon/trà & macchiato/@item.image" alt="@item.name" /></a>
+                            <a href="#"><img src="~/assets/image/icon/TRÀ VÀ MACCHIATO/@item.image" alt="@item.name" /></a>
                         </div>
                         <div class="product_info">
                             <h3 id="product_name"><a href="#">@item.name</a></h3>
                             <p id="product_price">@item.price đ</p>
-                            <div><a href="#" id="detail_btn">Thông tin</a></div>
+                            <div><a href="/staff/product/index/@item.id" id="detail_btn">Thông tin</a></div>
                         </div>
                     </div>
                     break;
@@ -82,12 +87,12 @@
                     {
                         <div class="product_Item nobox">
                             <div class="productImage">
-                                <a href="#"><img src="~/assets/image/icon/trà & macchiato/@item.image" alt="@item.name" /></a>
+                                <a href="#"><img src="~/assets/image/icon/TRÀ VÀ MACCHIATO/@item.image" alt="@item.name" /></a>
                             </div>
                             <div class="product_info">
                                 <h3 id="product_name"><a href="#">@item.name</a></h3>
                                 <p id="product_price">@item.price đ</p>
-                                <div><a href="#" id="detail_btn">Thông tin</a></div>
+                                <div><a href="/staff/product/index/@item.id" id="detail_btn">Thông tin</a></div>
                             </div>
                         </div>
                     }
@@ -107,12 +112,12 @@
                     <div class="product_Item box" style="width: 200px; height: 377px;">
                         <div class="ribbon"><span>Best Sell</span></div>
                         <div class="productImage">
-                            <a href="#"><img src="~/assets/image/icon/thức uống đá xay/@item.image" alt="@item.name" /></a>
+                            <a href="#"><img src="~/assets/image/icon/THỨC UỐNG ĐÁ XAY/@item.image" alt="@item.name" /></a>
                         </div>
                         <div class="product_info">
                             <h3 id="product_name"><a href="#">@item.name</a></h3>
                             <p id="product_price">@item.price đ</p>
-                            <div><a href="#" id="detail_btn">Thông tin</a></div>
+                            <div><a href="/staff/product/index/@item.id" id="detail_btn">Thông tin</a></div>
                         </div>
                     </div>
                     break;
@@ -123,12 +128,12 @@
                     {
                         <div class="product_Item nobox">
                             <div class="productImage">
-                                <a href="#"><img src="~/assets/image/icon/thức uống đá xay/@item.image" alt="@item.name" /></a>
+                                <a href="#"><img src="~/assets/image/icon/THỨC UỐNG ĐÁ XAY/@item.image" alt="@item.name" /></a>
                             </div>
                             <div class="product_info">
                                 <h3 id="product_name"><a href="#">@item.name</a></h3>
                                 <p id="product_price">@item.price đ</p>
-                                <div><a href="#" id="detail_btn">Thông tin</a></div>
+                                <div><a href="/staff/product/index/@item.id" id="detail_btn">Thông tin</a></div>
                             </div>
                         </div>
                     }
@@ -149,12 +154,12 @@
                     <div class="product_Item box" style="width: 200px; height: 377px;">
                         <div class="ribbon"><span>Best Sell</span></div>
                         <div class="productImage">
-                            <a href="#"><img src="~/assets/image/icon/thức uống trái cây/@item.image" alt="@item.name" /></a>
+                            <a href="#"><img src="~/assets/image/icon/THỨC UỐNG TRÁI CÂY/@item.image" alt="@item.name" /></a>
                         </div>
                         <div class="product_info">
                             <h3 id="product_name"><a href="#">@item.name</a></h3>
                             <p id="product_price">@item.price đ</p>
-                            <div><a href="#" id="detail_btn">Thông tin</a></div>
+                            <div><a href="/staff/product/index/@item.id" id="detail_btn">Thông tin</a></div>
                         </div>
                     </div>
                     break;
@@ -165,12 +170,12 @@
                     {
                         <div class="product_Item nobox">
                             <div class="productImage">
-                                <a href="#"><img src="~/assets/image/icon/thức uống trái cây/@item.image" alt="@item.name" /></a>
+                                <a href="#"><img src="~/assets/image/icon/THỨC UỐNG TRÁI CÂY/@item.image" alt="@item.name" /></a>
                             </div>
                             <div class="product_info">
                                 <h3 id="product_name"><a href="#">@item.name</a></h3>
                                 <p id="product_price">@item.price đ</p>
-                                <div><a href="#" id="detail_btn">Thông tin</a></div>
+                                <div><a href="/staff/product/index/@item.id" id="detail_btn">Thông tin</a></div>
                             </div>
                         </div>
                     }
@@ -191,12 +196,12 @@
                     <div class="product_Item box" style="width: 200px; height: 377px;">
                         <div class="ribbon"><span>Best Sell</span></div>
                         <div class="productImage">
-                            <a href="#"><img src="~/assets/image/icon/bánh & snack/@item.image" alt="@item.name" /></a>
+                            <a href="#"><img src="~/assets/image/icon/BÁNH VÀ SNACK/@item.image" alt="@item.name" /></a>
                         </div>
                         <div class="product_info">
                             <h3 id="product_name"><a href="#">@item.name</a></h3>
                             <p id="product_price">@item.price đ</p>
-                            <div><a href="#" id="detail_btn">Thông tin</a></div>
+                            <div><a href="/staff/product/index/@item.id" id="detail_btn">Thông tin</a></div>
                         </div>
                     </div>
                     break;
@@ -207,12 +212,12 @@
                     {
                         <div class="product_Item nobox">
                             <div class="productImage">
-                                <a href="#"><img src="~/assets/image/icon/bánh & snack/@item.image" alt="@item.name" /></a>
+                                <a href="#"><img src="~/assets/image/icon/BÁNH VÀ SNACK/@item.image" alt="@item.name" /></a>
                             </div>
                             <div class="product_info">
                                 <h3 id="product_name"><a href="#">@item.name</a></h3>
                                 <p id="product_price">@item.price đ</p>
-                                <div><a href="#" id="detail_btn">Thông tin</a></div>
+                                <div><a href="/staff/product/index/@item.id" id="detail_btn">Thông tin</a></div>
                             </div>
                         </div>
                     }
@@ -226,6 +231,7 @@
 
     </div>
 </div>
+<!-- hiển thị danh sách sản phẩm END -->
 <script>
     $(".bestsell").click(function () {
         $(".nobox").hide();
@@ -235,3 +241,41 @@
     });
 </script>
 
+<form action="/staff/product/add"  method="post" enctype="multipart/form-data">
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Thêm sản phẩm mới</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <label>Tên</label>
+                    <input class="form-control my-3" name="name" />
+                    <label>Giá</label>
+                    <input class="form-control my-3" name="price" />
+                    <label>ID hạng mục</label>
+                    <input class="form-control my-3" name="idcategory" />
+                    <select class="form-control" style="margin-bottom:10px;">
+                        <option>Danh sách hạng mục</option>
+                        @foreach (var item in ViewBag.list)
+                        {
+                            <option disabled="disabled">@item.id - @item.name</option>
+                        }
+                    </select>
+                    <label>Tên ảnh (.jpg .png )</label>
+                    <div class="form-group">
+                        <input type="file" name="file">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Add product</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>>

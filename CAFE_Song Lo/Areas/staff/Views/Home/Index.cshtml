@@ -21,6 +21,10 @@
 {
     <script type="text/javascript">toastr.success('Xác nhận thanh toán thành công.', 'Thông báo');</script>
 }
+@if (ViewBag.temp == 3)
+{
+    <script type="text/javascript">toastr.warning('Bàn không có sự thay đổi.', 'Thông báo');</script>
+}
 <title>Home</title>
 <div class="toptable">
     <div class="all">Toàn bộ</div>
