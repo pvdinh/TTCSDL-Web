@@ -127,27 +127,6 @@ namespace CAFE_Song_Lo.Areas.admin.Controllers
             ViewBag.count = db.staffs.OrderByDescending(s => s.idaccount).Take(1).Select(s => s.idaccount).FirstOrDefault() + 1;
             return View(data.allstaffs.ToPagedList(pagenumber, pageSize));
         }
-        public ActionResult supplier(int? page)
-        {
-            SupplierData data = new SupplierData();
-            int pageSize = 10;
-            int pagenumber = page ?? 1;
-            //data.allnhacungcaps = db.nhacungcaps.ToList();
-            List<nhacungcap> listNCC = db.nhacungcaps.ToList();
-            ViewBag.count = listNCC.Count();
-            data.nhapsanphamFromNCC = db.nhacungcaps.ToList().ToPagedList(pagenumber, pageSize);
-            data.listnamesanpham = new List<string>();
-            data.listallmoneynhapsanphams = new List<string>();
-            foreach (var item in data.nhapsanphamFromNCC)
-                using (QuanLyCafeEntities cfdb = new QuanLyCafeEntities())
-                {
-                    var sp = cfdb.nhapsanphams.ToList().Where(s => s.idncc == item.id).FirstOrDefault();
-                    data.listnamesanpham.Add(sp.tensanpham);
-                    data.listallmoneynhapsanphams.Add(sp.tongtien.ToString());
-                }
-
-            return View(data);
-        }
 
         public ActionResult editstaff(int id)
         {
