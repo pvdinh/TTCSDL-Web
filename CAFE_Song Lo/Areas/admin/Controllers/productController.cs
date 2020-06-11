@@ -29,53 +29,13 @@ namespace CAFE_Song_Lo.Areas.admin.Controllers
             db.delete_product(id);
             return RedirectToAction("product", "home", new { area = "admin" });
         }
-        [HttpPost]
-        public ActionResult add(get_info_product_Result data, HttpPostedFileBase file)
+        public ActionResult add(get_info_product_Result data)
         {
-            if (file != null)
-            {
-                if (data.idcategory == 1)
-                {
-                    //save image in folder
-                    string physicaPath = Server.MapPath("/assets/image/icon/cà phê/" + file.FileName);
-                    file.SaveAs(physicaPath);
-                }
-                else if (data.idcategory == 2)
-                {
-                    //save image in folder
-                    string physicaPath = Server.MapPath("/assets/image/icon/TRÀ VÀ MACCHIATO/" + file.FileName);
-                    file.SaveAs(physicaPath);
-                }
-                else if (data.idcategory == 3)
-                {
-                    //save image in folder
-                    string physicaPath = Server.MapPath("/assets/image/icon/THỨC UỐNG ĐÁ XAY/" + file.FileName);
-                    file.SaveAs(physicaPath);
-                }
-                else if (data.idcategory == 4)
-                {
-                    //save image in folder
-                    string physicaPath = Server.MapPath("/assets/image/icon/THỨC UỐNG TRÁI CÂY/" + file.FileName);
-                    file.SaveAs(physicaPath);
-                }
-                else if (data.idcategory == 5)
-                {
-                    //save image in folder
-                    string physicaPath = Server.MapPath("/assets/image/icon/BÁNH VÀ SNACK/" + file.FileName);
-                    file.SaveAs(physicaPath);
-                }
-                db.add_product(data.name, data.price, data.idcategory, file.FileName);
-            }
-            else
-            {
-                db.add_product(data.name, data.price, data.idcategory, "No picture");
-            }
+            db.add_product(data.name, data.price, data.idcategory, data.image);
             using (QuanLyCafeEntities dbb = new QuanLyCafeEntities())
             {
                 var x = db.foods.OrderByDescending(s => s.id).Take(1).FirstOrDefault();
                 get_info_product_Result product = db.get_info_product(x.id).FirstOrDefault();
-                List<category> listcategory = db.categories.ToList();
-                ViewBag.list = listcategory;
                 return View("index", product);
             }
         }
