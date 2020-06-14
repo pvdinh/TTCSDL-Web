@@ -1,0 +1,24 @@
+﻿@model IEnumerable<CAFE_Song_Lo.Models.filter_food_2_Result>
+
+<div class="container-fluid pl-4 mb-2">
+    <span class="categoryname caphe" id="caphe">@Model.ToList()[0].Name_Category</span>
+</div>
+@if (Model.ToList()[0].id != null)
+{
+    foreach (var item in Model)
+    {
+        <div class="product_Item caphe">
+            <div class="productImage">
+                <a data-ajax="true" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#cart"
+                   href="/admin/order/cartt/@item.id"><img src="~/assets/image/icon/@item.Name_Category/@item.image" alt="@item.name" /></a>
+            </div>
+            <div class="product_info">
+                <h3 id="product_name"><a data-ajax="true" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#cart" href="/admin/order/cartt/@item.id">@item.name</a></h3>
+                <p id="product_price">@string.Format("{0:0,0}", item.price) đ</p>
+                <div><a data-ajax="true" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#cart" href="/admin/order/cartt/@item.id" id="detail_btn">Chọn</a></div>
+            </div>
+        </div>
+    }
+}
+
+

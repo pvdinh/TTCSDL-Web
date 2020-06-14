@@ -61,7 +61,7 @@ namespace CAFE_Song_Lo.Areas.staff.Controllers
             }
 
             data.allfoods = db.foods.ToList();
-            return View(data);
+            return View(db.categories.ToList());
         }
 
 
@@ -147,6 +147,15 @@ namespace CAFE_Song_Lo.Areas.staff.Controllers
             }
 
             return cart();
+        }
+        public ActionResult viewProduct(int? id)
+        {
+            if (id == null) id = 1;
+            Session["idcate"] = id;
+            var Listproduct = db.filter_food_2(id).ToList();
+            //var idd = new SqlParameter("@idcategory", id);
+            //var Listproduct = db.Database.SqlQuery<filter_food_2_Result>("filter_food_2 @idcategory",idd).ToList();
+            return PartialView("_ViewProduct", Listproduct);
         }
     }
 

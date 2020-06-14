@@ -35,7 +35,7 @@ namespace CAFE_Song_Lo.Controllers
                 }
                 else
                 {
-                    user.LoginErrorMessage = "Wrong username or password.";
+                    //user.LoginErrorMessage = "Wrong username or password.";
                     return View("index", user);
                 }
             }

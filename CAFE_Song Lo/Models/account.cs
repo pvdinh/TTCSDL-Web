@@ -25,7 +25,6 @@ namespace CAFE_Song_Lo.Models
         public string username { get; set; }
         public string password { get; set; }
         public string type { get; set; }
-        public string LoginErrorMessage { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<bill> bills { get; set; }

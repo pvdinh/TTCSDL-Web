@@ -18,11 +18,22 @@ namespace CAFE_Song_Lo.Areas.admin.Controllers
             ViewBag.list = listcategory;
             return View(product);
         }
-        public ActionResult edit(get_info_product_Result data)
+        [HttpPost]
+        public ActionResult edit(get_info_product_Result data, HttpPostedFileBase file)
         {
-            db.update_product(data.id, data.name, data.price, data.idcategory, data.image);
+            if (file != null)
+            {
+                var x = db.categories.Where(s => s.id == data.idcategory).FirstOrDefault();
+                string physicaPath = Server.MapPath("/assets/image/icon/" + x.name + "/" + file.FileName);
+                file.SaveAs(physicaPath);
+                db.update_product(data.id, data.name, data.price, data.idcategory, file.FileName);
+            }
+            else
+            {
+                db.update_product(data.id, data.name, data.price, data.idcategory, data.image);
+            }
             get_info_product_Result product = db.get_info_product(data.id).FirstOrDefault();
-            return View("index", product);
+            return RedirectToAction("index", "product", new { id = data.id });
         }
         public ActionResult delete(int? id)
         {
@@ -32,43 +43,25 @@ namespace CAFE_Song_Lo.Areas.admin.Controllers
         [HttpPost]
         public ActionResult add(get_info_product_Result data, HttpPostedFileBase file)
         {
-            if (file != null)
+            if (db.categories.Find(data.idcategory) != null)
             {
-                if (data.idcategory == 1)
+                if (file != null)
                 {
-                    //save image in folder
-                    string physicaPath = Server.MapPath("/assets/image/icon/cà phê/" + file.FileName);
+                    var x = db.categories.Where(s => s.id == data.idcategory).FirstOrDefault();
+                    string physicaPath = Server.MapPath("/assets/image/icon/" + x.name + "/" + file.FileName);
                     file.SaveAs(physicaPath);
+                    db.add_product(data.name, data.price, data.idcategory, file.FileName);
                 }
-                else if (data.idcategory == 2)
+                else
                 {
-                    //save image in folder
-                    string physicaPath = Server.MapPath("/assets/image/icon/TRÀ VÀ MACCHIATO/" + file.FileName);
-                    file.SaveAs(physicaPath);
+                    db.add_product(data.name, data.price, data.idcategory, "No picture");
                 }
-                else if (data.idcategory == 3)
-                {
-                    //save image in folder
-                    string physicaPath = Server.MapPath("/assets/image/icon/THỨC UỐNG ĐÁ XAY/" + file.FileName);
-                    file.SaveAs(physicaPath);
-                }
-                else if (data.idcategory == 4)
-                {
-                    //save image in folder
-                    string physicaPath = Server.MapPath("/assets/image/icon/THỨC UỐNG TRÁI CÂY/" + file.FileName);
-                    file.SaveAs(physicaPath);
-                }
-                else if (data.idcategory == 5)
-                {
-                    //save image in folder
-                    string physicaPath = Server.MapPath("/assets/image/icon/BÁNH VÀ SNACK/" + file.FileName);
-                    file.SaveAs(physicaPath);
-                }
-                db.add_product(data.name, data.price, data.idcategory, file.FileName);
             }
             else
             {
-                db.add_product(data.name, data.price, data.idcategory, "No picture");
+                TempData["alert"] = "Thêm mới sản phẩm không thành công do hạng mục món ăn không tồn tại !!";
+                TempData["AlertType"] = "alert-danger";
+                return RedirectToAction("product", "home");
             }
             using (QuanLyCafeEntities dbb = new QuanLyCafeEntities())
             {
