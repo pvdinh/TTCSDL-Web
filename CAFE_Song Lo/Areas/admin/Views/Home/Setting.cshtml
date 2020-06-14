@@ -17,7 +17,8 @@
     <form action="/admin/home/setting" method="get">
         <div class="container">
             <div class="input-group col-md-4 mb-2" style="padding-left:0px;">
-                @{if (ViewBag.search != null && string.Compare(ViewBag.search, "", true) != 0)
+                @{
+                    if (ViewBag.search != null && string.Compare(ViewBag.search, "", true) != 0)
                     {
                         <input class="form-control py-2" type="search" value="@ViewBag.search" id="example-search-input" name="searchstring">
                     }

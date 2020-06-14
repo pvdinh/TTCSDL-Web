@@ -14,6 +14,7 @@ namespace CAFE_Song_Lo.Areas.staff.Controllers
         classdata data = new classdata();
         public ActionResult Index(int? id, int? temp)
         {
+            //taọ 1 toastr thông báo khi chưa chọn món mà bấm xác nhận
             using (QuanLyCafeEntities dbb = new QuanLyCafeEntities())
             {
                 if (Session["idbill"] != null)
@@ -28,11 +29,46 @@ namespace CAFE_Song_Lo.Areas.staff.Controllers
                 }
 
             }
-            if (id != null)
+            //trường hợp chọn thêm món mà chưa xác nhận sẽ không được tính
+            if (id == null && temp == null && Session["idbill"] != null)
             {
+                ViewBag.temp = 3; //toastr thông báo món ăn ko thay đổi
+                List<listIncart> listproduct = new List<listIncart>();
+                listproduct = (List<listIncart>)Session["listproduct"];
+                //listproduct là danh sách trước khi chịn thêm món
+                //listproduct1 là danh sách sau khi chịn thêm món
+                using (QuanLyCafeEntities dbb = new QuanLyCafeEntities())
+                {
+                    List<listIncart> listproductbefore = new List<listIncart>();
+                    classdata cardfood1 = new classdata();
+                    cardfood1.allbillinfos = dbb.billinfoes.ToList();
+                    foreach (billinfo item in cardfood1.allbillinfos)
+                    {
+                        if (item.idbill == int.Parse(Session["idbill"].ToString()))
+                        {
+                            listproductbefore.Add(new listIncart(item.idfood, item.idbill, item.count));
+                        }
+                    }
+                    foreach (var item in listproductbefore)
+                    {
+                        foreach (var item1 in listproduct)
+                        {
+                            if (item1.ID == item.ID && item1.COUNT != item.COUNT)
+                            {
+                                var z = dbb.billinfoes.ToList().Where(s => s.idfood == item.ID && s.idbill == int.Parse(Session["idbill"].ToString())).FirstOrDefault();
+                                z.count = item1.COUNT;
+                                dbb.SaveChanges();
+                            }
+                        }
+                    }
+                }
+            }
+            else if (id != null && temp != null)
+            {
+                //xác nhận đổi món của bàn thành công
                 ViewBag.temp = 0;
             }
-            //nếu id != null tức là có bàn yêu cầu xác nhận đặt món
+            //nếu id != null và bàn trống tức là có bàn yêu cầu xác nhận đặt món
             if (id != null && db.tablefoods.ToList().Where(s => s.id == id && string.Compare(s.status, "trống", true) == 0).FirstOrDefault() != null)
             {
                 ViewBag.temp = temp;
