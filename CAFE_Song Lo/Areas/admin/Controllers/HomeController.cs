@@ -89,25 +89,24 @@ namespace CAFE_Song_Lo.Areas.admin.Controllers
             ViewBag.count = db.staffs.ToList().Count();
             return View(data.allstaffs.ToPagedList(pagenumber, pageSize));
         }
-        public ActionResult supplier(int? page)
+        public ActionResult Supplier(int? page)
         {
             SupplierData data = new SupplierData();
-            int pageSize = 10;
+            int pageSize = 5;
             int pagenumber = page ?? 1;
-            //data.allnhacungcaps = db.nhacungcaps.ToList();
+            //data.allnhacungcaps = (IPagedList<nhacungcap>)db.nhacungcaps.ToList();
             List<nhacungcap> listNCC = db.nhacungcaps.ToList();
             ViewBag.count = listNCC.Count();
-            data.nhapsanphamFromNCC = db.nhacungcaps.ToList().ToPagedList(pagenumber, pageSize);
+            data.allnhacungcaps = db.nhacungcaps.ToList().ToPagedList(pagenumber, pageSize);
             data.listnamesanpham = new List<string>();
             data.listallmoneynhapsanphams = new List<string>();
-            foreach (var item in data.nhapsanphamFromNCC)
+            foreach (var item in data.allnhacungcaps)
                 using (QuanLyCafeEntities cfdb = new QuanLyCafeEntities())
                 {
                     var sp = cfdb.nhapsanphams.ToList().Where(s => s.idncc == item.id).FirstOrDefault();
-                    data.listnamesanpham.Add(sp.tensanpham);
-                    data.listallmoneynhapsanphams.Add(sp.tongtien.ToString());
+                        data.listnamesanpham.Add(sp.tensanpham);
+                        data.listallmoneynhapsanphams.Add(sp.tongtien.ToString());
                 }
-
             return View(data);
         }
 
