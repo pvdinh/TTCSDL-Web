@@ -339,5 +339,23 @@ namespace CAFE_Song_Lo.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("update_product", idproductParameter, nameParameter, priceParameter, idcategoryParameter, imageParameter);
         }
+    
+        public virtual ObjectResult<filter_food_Result1> filter_food(Nullable<int> idcategory)
+        {
+            var idcategoryParameter = idcategory.HasValue ?
+                new ObjectParameter("idcategory", idcategory) :
+                new ObjectParameter("idcategory", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<filter_food_Result1>("filter_food", idcategoryParameter);
+        }
+    
+        public virtual ObjectResult<filter_food_2_Result> filter_food_2(Nullable<int> idcategory)
+        {
+            var idcategoryParameter = idcategory.HasValue ?
+                new ObjectParameter("idcategory", idcategory) :
+                new ObjectParameter("idcategory", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<filter_food_2_Result>("filter_food_2", idcategoryParameter);
+        }
     }
 }

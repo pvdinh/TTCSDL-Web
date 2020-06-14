@@ -1,4 +1,4 @@
-﻿@model CAFE_Song_Lo.Models.classdata
+﻿@model IEnumerable<CAFE_Song_Lo.Models.category>
 @{
     ViewBag.Title = "Index";
     Layout = "~/Areas/admin/Views/Shared/_Layout.cshtml";
@@ -39,142 +39,24 @@
     <div class="category">
         <div style="width: 240px; background-color: whitesmoke;padding: 30px;position: fixed;">
             <span style="font-size: 20px;">Hạng mục món ăn.<br /></span>
-            <a href="#" id="all" class="categoryitem">All<br /></a>
-            <a href="#" id="caphe" class="categoryitem">CÀ PHÊ<br /></a>
-            <a href="#" id="tramacchiato" class="categoryitem">TRÀ & MACCHIATO<br /></a>
-            <a href="#" id="daxay" class="categoryitem">THỨC UỐNG ĐÁ XAY<br /></a>
-            <a href="#" id="traicay" class="categoryitem">THỨC UỐNG TRÁI CÂY<br /></a>
-            <a href="#" id="snack" class="categoryitem">BÁNH & SNACK</a><br>
-            <a href="#cartt" class="categoryitem">BACK TO TOP</a>
+            @foreach (var item in Model)
+            {
+                <a data-ajax="true" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#listproduct" href="/admin/order/viewProduct?id=@item.id" class="categoryitem">@item.name</a><br />
+            }
+
         </div>
     </div>
 </div>
 <div class="productitem">
-    <div class="listproduct">
-        <div class="container-fluid pl-4 mb-2">
-            <span class="categoryname caphe" id="caphe">Cà phê</span>
-        </div>
-        @foreach (var item in Model.allfoods.Where(s => s.idcategory == 1))
-        {
-            <div class="product_Item caphe">
-                <div class="productImage">
-                    <a data-ajax="true" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#cart"
-                       href="/admin/order/cartt/@item.id"><img src="~/assets/image/icon/cà phê/@item.image" alt="@item.name" /></a>
-                </div>
-                <div class="product_info">
-                    <h3 id="product_name"><a data-ajax="true" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#cart" href="/admin/order/cartt/@item.id">@item.name</a></h3>
-                    <p id="product_price">@item.price đ</p>
-                    <div><a data-ajax="true" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#cart" href="/admin/order/cartt/@item.id" id="detail_btn">Chọn</a></div>
-                </div>
-            </div>
-        }
-
-        <div class="container-fluid pl-4 mb-2">
-            <span class="categoryname tramacchiato" id="tramacchiato">TRÀ & MACCHIATO</span>
-        </div>
-
-        @foreach (var item in Model.allfoods.Where(s => s.idcategory == 2))
-        {
-            <div class="product_Item tramacchiato">
-                <div class="productImage">
-                    <a data-ajax="true" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#cart"
-                       href="/admin/order/cartt/@item.id"><img src="~/assets/image/icon/trà & macchiato/@item.image" alt="@item.name" /></a>
-                </div>
-                <div class="product_info">
-                    <h3 id="product_name"><a data-ajax="true" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#cart" href="/admin/order/cartt/@item.id">@item.name</a></h3>
-                    <p id="product_price">@item.price đ</p>
-                    <div><a data-ajax="true" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#cart" href="/admin/order/cartt/@item.id" id="detail_btn">Chọn</a></div>
-                </div>
-            </div>
-        }
-
-        <div class="container-fluid pl-4 mb-2">
-            <span class="categoryname daxay" id="daxay">THỨC UỐNG ĐÁ XAY</span>
-        </div>
-
-        @foreach (var item in Model.allfoods.Where(s => s.idcategory == 3))
-        {
-            <div class="product_Item daxay">
-                <div class="productImage">
-                    <a data-ajax="true" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#cart"
-                       href="/admin/order/cartt/@item.id"><img src="~/assets/image/icon/thức uống đá xay/@item.image" alt="@item.name" /></a>
-                </div>
-                <div class="product_info">
-                    <h3 id="product_name"><a data-ajax="true" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#cart" href="/admin/order/cartt/@item.id">@item.name</a></h3>
-                    <p id="product_price">@item.price đ</p>
-                    <div><a data-ajax="true" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#cart" href="/admin/order/cartt/@item.id" id="detail_btn">Chọn</a></div>
-                </div>
-            </div>
-        }
-
-        <div class="container-fluid pl-4 mb-2">
-            <span class="categoryname traicay" id="traicay">THỨC UỐNG TRÁI CÂY</span>
-        </div>
-        @foreach (var item in Model.allfoods.Where(s => s.idcategory == 4))
-        {
-            <div class="product_Item traicay">
-                <div class="productImage">
-                    <a data-ajax="true" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#cart"
-                       href="/admin/order/cartt/@item.id"><img src="~/assets/image/icon/thức uống trái cây/@item.image" alt="@item.name" /></a>
-                </div>
-                <div class="product_info">
-                    <h3 id="product_name"><a data-ajax="true" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#cart" href="/admin/order/cartt/@item.id">@item.name</a></h3>
-                    <p id="product_price">@item.price đ</p>
-                    <div><a data-ajax="true" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#cart" href="/admin/order/cartt/@item.id" id="detail_btn">Chọn</a></div>
-                </div>
-            </div>
-        }
-
-        <div class="container-fluid pl-4 mb-2">
-            <span class="categoryname snack" id="snack">BÁNH VÀ SNACK</span>
-        </div>
-
-        @foreach (var item in Model.allfoods.Where(s => s.idcategory == 5))
-        {
-            <div class="product_Item snack">
-                <div class="productImage">
-                    <a data-ajax="true" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#cart"
-                       href="/admin/order/cartt/@item.id"><img src="~/assets/image/icon/bánh & snack/@item.image" alt="@item.name" /></a>
-                </div>
-                <div class="product_info">
-                    <h3 id="product_name"><a data-ajax="true" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#cart" href="/admin/order/cartt/@item.id">@item.name</a></h3>
-                    <p id="product_price">@item.price đ</p>
-                    <div><a data-ajax="true" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#cart" href="/admin/order/cartt/@item.id" id="detail_btn">Chọn</a></div>
-                </div>
-            </div>
-        }
-
-
+    <div class="listproduct" id="listproduct">
+        @{Html.RenderAction("viewProduct", new { id = Session["idcate"] } ); }
     </div>
 </div>
 
 <script>
-    $("#all").click(function () {
-        $(".tramacchiato ,.daxay ,.traicay, .snack,.caphe").show();
-    })
-    $("#caphe").click(function () {
-        $(".tramacchiato ,.daxay ,.traicay, .snack").hide();
-        $(".caphe").show();
-    })
-    $("#tramacchiato").click(function () {
-        $(".caphe, .daxay, .traicay, .snack").hide();
-        $(".tramacchiato").show();
-    })
-    $("#daxay").click(function () {
-        $(".tramacchiato ,.caphe ,.traicay, .snack").hide();
-        $(".daxay").show();
-    })
-    $("#traicay").click(function () {
-        $(".tramacchiato ,.daxay, .caphe, .snack").hide();
-        $(".traicay").show();
-    })
-    $("#snack").click(function () {
-        $(".tramacchiato ,.daxay, .traicay, .caphe").hide();
-        $(".snack").show();
-    })
     history.pushState(null, null, location.href);
     window.onpopstate = function () {
-        /* khi người dùng tương tác với lịch sử duyệt web, sẽ bắt sự kiện chuyển hướng đến 1 trang ko có trong lịch sử hiện tại,chính là cái mà pushstate tạo ra bên trên =)) */
-        history.go(1);
-    };
+                /* khi người dùng tương tác với lịch sử duyệt web, sẽ bắt sự kiện chuyển hướng đến 1 trang ko có trong lịch sử hiện tại,chính là cái mà pushstate tạo ra bên trên =)) */
+                history.go(1);
+            };
 </script>

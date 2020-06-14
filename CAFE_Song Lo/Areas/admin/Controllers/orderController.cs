@@ -1,6 +1,7 @@
 ﻿using CAFE_Song_Lo.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -12,7 +13,7 @@ namespace CAFE_Song_Lo.Areas.admin.Controllers
         // GET: admin/order
         QuanLyCafeEntities db = new QuanLyCafeEntities();
         classdata data = new classdata();
-        public ActionResult Index(int id,int? status)
+        public ActionResult Index(int id, int? status)
         {
             ViewBag.temp = status;
             //nhận được id bàn
@@ -51,7 +52,7 @@ namespace CAFE_Song_Lo.Areas.admin.Controllers
                         {
                             if (item.idbill == int.Parse(Session["idbill"].ToString()))
                             {
-                                listproduct.Add(new listIncart(item.idfood,item.idbill,item.count));
+                                listproduct.Add(new listIncart(item.idfood, item.idbill, item.count));
                             }
                         }
                         Session["listproduct"] = listproduct;
@@ -59,9 +60,7 @@ namespace CAFE_Song_Lo.Areas.admin.Controllers
                 }
 
             }
-
-            data.allfoods = db.foods.ToList();
-            return View(data);
+            return View(db.categories.ToList());
         }
 
 
@@ -82,7 +81,7 @@ namespace CAFE_Song_Lo.Areas.admin.Controllers
                     cartfood.allfoods.Add(x);
                 }
             }
-            return PartialView("/Views/Shared/_cartproduct.cshtml", cartfood);
+            return PartialView("/views/Shared/_cartproduct.cshtml", cartfood);
         }
 
         public ActionResult cartt(int id)
@@ -134,6 +133,16 @@ namespace CAFE_Song_Lo.Areas.admin.Controllers
             }
 
             return cart();
+        }
+
+        public ActionResult viewProduct(int? id)
+        {
+            if (id == null) id = 1;
+            Session["idcate"] = id;
+            var Listproduct = db.filter_food_2(id).ToList();
+            //var idd = new SqlParameter("@idcategory", id);
+            //var Listproduct = db.Database.SqlQuery<filter_food_2_Result>("filter_food_2 @idcategory",idd).ToList();
+            return PartialView("_ViewProduct",Listproduct);
         }
     }
 
