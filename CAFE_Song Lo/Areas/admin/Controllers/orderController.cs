@@ -81,7 +81,7 @@ namespace CAFE_Song_Lo.Areas.admin.Controllers
                     cartfood.allfoods.Add(x);
                 }
             }
-            return PartialView("/Shared/_cartproduct.cshtml", cartfood);
+            return PartialView("/views/Shared/_cartproduct.cshtml", cartfood);
         }
 
         public ActionResult cartt(int id)
