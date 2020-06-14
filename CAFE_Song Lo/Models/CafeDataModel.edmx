@@ -247,6 +247,12 @@
         <Function Name="empty_table" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id" Type="int" Mode="In" />
         </Function>
+        <Function Name="filter_food" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idcategory" Type="int" Mode="In" />
+        </Function>
+        <Function Name="filter_food_2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idcategory" Type="int" Mode="In" />
+        </Function>
         <Function Name="get_info_product" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="idproduct" Type="int" Mode="In" />
         </Function>
@@ -591,6 +597,12 @@
             <Parameter Name="idcategory" Mode="In" Type="Int32" />
             <Parameter Name="image" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="filter_food" ReturnType="Collection(QuanLyCafeModel.filter_food_Result1)">
+          <Parameter Name="idcategory" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="filter_food_2" ReturnType="Collection(QuanLyCafeModel.filter_food_2_Result)">
+            <Parameter Name="idcategory" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="staff_audit">
           <Key>
@@ -651,6 +663,30 @@
           <Property Type="Int32" Name="idcategory" Nullable="false" />
           <Property Type="String" Name="image" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="nameCg" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="filter_food_Result">
+          <Property Type="Int32" Name="idcategory" Nullable="true" />
+          <Property Type="String" Name="name" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="id" Nullable="true" />
+          <Property Type="String" Name="name1" Nullable="true" MaxLength="50" />
+          <Property Type="Double" Name="price" Nullable="true" />
+          <Property Type="String" Name="image" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="filter_food_Result1">
+          <Property Type="Int32" Name="idcategory" Nullable="true" />
+          <Property Type="String" Name="Name_Category" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="id" Nullable="true" />
+          <Property Type="String" Name="name" Nullable="true" MaxLength="50" />
+          <Property Type="Double" Name="price" Nullable="true" />
+          <Property Type="String" Name="image" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="filter_food_2_Result">
+          <Property Type="Int32" Name="idcategory" Nullable="true" />
+          <Property Type="String" Name="Name_Category" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="id" Nullable="true" />
+          <Property Type="String" Name="name" Nullable="true" MaxLength="50" />
+          <Property Type="Double" Name="price" Nullable="true" />
+          <Property Type="String" Name="image" Nullable="true" MaxLength="50" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -804,6 +840,30 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="update_product" FunctionName="QuanLyCafeModel.Store.update_product" />
+          <FunctionImportMapping FunctionImportName="filter_food" FunctionName="QuanLyCafeModel.Store.filter_food">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="QuanLyCafeModel.filter_food_Result1">
+                <ScalarProperty Name="idcategory" ColumnName="idcategory" />
+                <ScalarProperty Name="Name_Category" ColumnName="Name Category" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="image" ColumnName="image" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="filter_food_2" FunctionName="QuanLyCafeModel.Store.filter_food_2">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="QuanLyCafeModel.filter_food_2_Result">
+                <ScalarProperty Name="idcategory" ColumnName="idcategory" />
+                <ScalarProperty Name="Name_Category" ColumnName="Name Category" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="image" ColumnName="image" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

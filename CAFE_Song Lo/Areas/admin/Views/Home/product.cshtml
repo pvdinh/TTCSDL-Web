@@ -8,227 +8,66 @@
 <link href="~/assets/product/product.css" rel="stylesheet" />
 <link href="~/assets/product/labelproduct.css" rel="stylesheet" />
 <!-- các nút tuỳ chọn -->
+<div>
+    @if (TempData["alert"] != null)
+    {
+        <div id="AlertBox" class="alert @TempData["AlertType"] ">
+            @TempData["alert"]
+        </div>
+    }
+</div>
 <div class="toptable">
     <div class="bestsell">Bán chạy</div>
     <div class="allsell">Toàn bộ</div>
     <div data-toggle="modal" data-target="#exampleModal">Thêm mới sản phẩm</div>
 </div>
-
 <!-- các nút tuỳ chọn END -->
 <!-- hiển thị danh sách sản phẩm -->
 <div class="productitem">
     <div class="listproduct">
-        <div class="container-fluid pl-4 mb-2">
-            <span class="categoryname" id="caphe">Cà phê</span>
-        </div>
-        @foreach (var item in Model.allfoods.Where(s => s.idcategory == 1))
+        @foreach (var itemm in ViewBag.list)
         {
-            for (int j = 0; j < Model.top10sell.Count(); j++)
+            <div class="container-fluid pl-4 mb-2">
+                <span class="categoryname" id="caphe">@itemm.name</span>
+            </div>
+            foreach (var item in Model.allfoods.Where(s => s.idcategory == itemm.id))
             {
-                if (item.id == Model.top10sell[j])
+                for (int j = 0; j < Model.top10sell.Count(); j++)
                 {
-                    <div class="product_Item box" style="width: 200px; height: 377px;">
-                        <div class="ribbon"><span>Best Sell</span></div>
-                        <div class="productImage">
-                            <a href="#"><img src="~/assets/image/icon/cà phê/@item.image" alt="@item.name" /></a>
-                        </div>
-                        <div class="product_info">
-                            <h3 id="product_name"><a href="#">@item.name</a></h3>
-                            <p id="product_price">@item.price đ</p>
-                            <div><a href="/admin/product/index/@item.id" id="detail_btn">Thông tin</a></div>
-                        </div>
-                    </div>
-                    break;
-                }
-                else
-                {
-                    if (j == Model.top10sell.Count() - 1)
+                    if (item.id == Model.top10sell[j])
                     {
-                        <div class="product_Item nobox">
+                        <div class="product_Item box" style="width: 200px; height: 377px;">
+                            <div class="ribbon"><span>Best Sell</span></div>
                             <div class="productImage">
-                                <a href="#"><img src="~/assets/image/icon/cà phê/@item.image" alt="@item.name" /></a>
+                                <a href="#"><img src="~/assets/image/icon/@itemm.name/@item.image" alt="@item.name" /></a>
                             </div>
                             <div class="product_info">
                                 <h3 id="product_name"><a href="#">@item.name</a></h3>
-                                <p id="product_price">@item.price đ</p>
+                                <p id="product_price">@string.Format("{0:0,0}", item.price) đ</p>
                                 <div><a href="/admin/product/index/@item.id" id="detail_btn">Thông tin</a></div>
                             </div>
                         </div>
+                        break;
+                    }
+                    else
+                    {
+                        if (j == Model.top10sell.Count() - 1)
+                        {
+                            <div class="product_Item nobox">
+                                <div class="productImage">
+                                    <a href="#"><img src="~/assets/image/icon/@itemm.name/@item.image" alt="@item.name" /></a>
+                                </div>
+                                <div class="product_info">
+                                    <h3 id="product_name"><a href="#">@item.name</a></h3>
+                                    <p id="product_price">@string.Format("{0:0,0}", item.price) đ</p>
+                                    <div><a href="/admin/product/index/@item.id" id="detail_btn">Thông tin</a></div>
+                                </div>
+                            </div>
+                        }
                     }
                 }
             }
         }
-
-        <div class="container-fluid pl-4 mb-2">
-            <span class="categoryname" id="tramacchiato">TRÀ & MACCHIATO</span>
-        </div>
-        @foreach (var item in Model.allfoods.Where(s => s.idcategory == 2))
-        {
-            for (int j = 0; j < Model.top10sell.Count(); j++)
-            {
-                if (item.id == Model.top10sell[j])
-                {
-                    <div class="product_Item box" style="width: 200px; height: 377px;">
-                        <div class="ribbon"><span>Best Sell</span></div>
-                        <div class="productImage">
-                            <a href="#"><img src="~/assets/image/icon/TRÀ VÀ MACCHIATO/@item.image" alt="@item.name" /></a>
-                        </div>
-                        <div class="product_info">
-                            <h3 id="product_name"><a href="#">@item.name</a></h3>
-                            <p id="product_price">@item.price đ</p>
-                            <div><a href="/admin/product/index/@item.id" id="detail_btn">Thông tin</a></div>
-                        </div>
-                    </div>
-                    break;
-                }
-                else
-                {
-                    if (j == Model.top10sell.Count() - 1)
-                    {
-                        <div class="product_Item nobox">
-                            <div class="productImage">
-                                <a href="#"><img src="~/assets/image/icon/TRÀ VÀ MACCHIATO/@item.image" alt="@item.name" /></a>
-                            </div>
-                            <div class="product_info">
-                                <h3 id="product_name"><a href="#">@item.name</a></h3>
-                                <p id="product_price">@item.price đ</p>
-                                <div><a href="/admin/product/index/@item.id" id="detail_btn">Thông tin</a></div>
-                            </div>
-                        </div>
-                    }
-                }
-            }
-        }
-
-        <div class="container-fluid pl-4 mb-2">
-            <span class="categoryname" id="daxay">THỨC UỐNG ĐÁ XAY</span>
-        </div>
-        @foreach (var item in Model.allfoods.Where(s => s.idcategory == 3))
-        {
-            for (int j = 0; j < Model.top10sell.Count(); j++)
-            {
-                if (item.id == Model.top10sell[j])
-                {
-                    <div class="product_Item box" style="width: 200px; height: 377px;">
-                        <div class="ribbon"><span>Best Sell</span></div>
-                        <div class="productImage">
-                            <a href="#"><img src="~/assets/image/icon/THỨC UỐNG ĐÁ XAY/@item.image" alt="@item.name" /></a>
-                        </div>
-                        <div class="product_info">
-                            <h3 id="product_name"><a href="#">@item.name</a></h3>
-                            <p id="product_price">@item.price đ</p>
-                            <div><a href="/admin/product/index/@item.id" id="detail_btn">Thông tin</a></div>
-                        </div>
-                    </div>
-                    break;
-                }
-                else
-                {
-                    if (j == Model.top10sell.Count() - 1)
-                    {
-                        <div class="product_Item nobox">
-                            <div class="productImage">
-                                <a href="#"><img src="~/assets/image/icon/THỨC UỐNG ĐÁ XAY/@item.image" alt="@item.name" /></a>
-                            </div>
-                            <div class="product_info">
-                                <h3 id="product_name"><a href="#">@item.name</a></h3>
-                                <p id="product_price">@item.price đ</p>
-                                <div><a href="/admin/product/index/@item.id" id="detail_btn">Thông tin</a></div>
-                            </div>
-                        </div>
-                    }
-                }
-            }
-
-        }
-
-        <div class="container-fluid pl-4 mb-2">
-            <span class="categoryname" id="traicay">THỨC UỐNG TRÁI CÂY</span>
-        </div>
-        @foreach (var item in Model.allfoods.Where(s => s.idcategory == 4))
-        {
-            for (int j = 0; j < Model.top10sell.Count(); j++)
-            {
-                if (item.id == Model.top10sell[j])
-                {
-                    <div class="product_Item box" style="width: 200px; height: 377px;">
-                        <div class="ribbon"><span>Best Sell</span></div>
-                        <div class="productImage">
-                            <a href="#"><img src="~/assets/image/icon/THỨC UỐNG TRÁI CÂY/@item.image" alt="@item.name" /></a>
-                        </div>
-                        <div class="product_info">
-                            <h3 id="product_name"><a href="#">@item.name</a></h3>
-                            <p id="product_price">@item.price đ</p>
-                            <div><a href="/admin/product/index/@item.id" id="detail_btn">Thông tin</a></div>
-                        </div>
-                    </div>
-                    break;
-                }
-                else
-                {
-                    if (j == Model.top10sell.Count() - 1)
-                    {
-                        <div class="product_Item nobox">
-                            <div class="productImage">
-                                <a href="#"><img src="~/assets/image/icon/THỨC UỐNG TRÁI CÂY/@item.image" alt="@item.name" /></a>
-                            </div>
-                            <div class="product_info">
-                                <h3 id="product_name"><a href="#">@item.name</a></h3>
-                                <p id="product_price">@item.price đ</p>
-                                <div><a href="/admin/product/index/@item.id" id="detail_btn">Thông tin</a></div>
-                            </div>
-                        </div>
-                    }
-                }
-            }
-
-        }
-
-        <div class="container-fluid pl-4 mb-2">
-            <span class="categoryname" id="snack">BÁNH VÀ SNACK</span>
-        </div>
-        @foreach (var item in Model.allfoods.Where(s => s.idcategory == 5))
-        {
-            for (int j = 0; j < Model.top10sell.Count(); j++)
-            {
-                if (item.id == Model.top10sell[j])
-                {
-                    <div class="product_Item box" style="width: 200px; height: 377px;">
-                        <div class="ribbon"><span>Best Sell</span></div>
-                        <div class="productImage">
-                            <a href="#"><img src="~/assets/image/icon/BÁNH VÀ SNACK/@item.image" alt="@item.name" /></a>
-                        </div>
-                        <div class="product_info">
-                            <h3 id="product_name"><a href="#">@item.name</a></h3>
-                            <p id="product_price">@item.price đ</p>
-                            <div><a href="/admin/product/index/@item.id" id="detail_btn">Thông tin</a></div>
-                        </div>
-                    </div>
-                    break;
-                }
-                else
-                {
-                    if (j == Model.top10sell.Count() - 1)
-                    {
-                        <div class="product_Item nobox">
-                            <div class="productImage">
-                                <a href="#"><img src="~/assets/image/icon/BÁNH VÀ SNACK/@item.image" alt="@item.name" /></a>
-                            </div>
-                            <div class="product_info">
-                                <h3 id="product_name"><a href="#">@item.name</a></h3>
-                                <p id="product_price">@item.price đ</p>
-                                <div><a href="/admin/product/index/@item.id" id="detail_btn">Thông tin</a></div>
-                            </div>
-                        </div>
-                    }
-                }
-
-
-            }
-
-        }
-
-
     </div>
 </div>
 <!-- hiển thị danh sách sản phẩm END -->
@@ -254,11 +93,11 @@
                 </div>
                 <div class="modal-body">
                     <label>Tên</label>
-                    <input class="form-control my-3" name="name" />
+                    <input class="form-control my-3" name="name" required="true"/>
                     <label>Giá</label>
-                    <input class="form-control my-3" name="price" />
+                    <input class="form-control my-3" name="price" required="true" type="number"/>
                     <label>ID hạng mục</label>
-                    <input class="form-control my-3" name="idcategory" />
+                    <input class="form-control my-3" name="idcategory" required="true" type="number"/>
                     <select class="form-control" style="margin-bottom:10px;">
                         <option>Danh sách hạng mục</option>
                         @foreach (var item in ViewBag.list)

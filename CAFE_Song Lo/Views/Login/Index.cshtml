@@ -28,7 +28,7 @@
             <p style="color:red;margin-bottom:10px">@Html.ValidationMessageFor(model => model.password)</p>
             <button type="submit" class="logbnt">Login</button>
 
-            <h4 style="text-align:center;margin-top:20px;color:red">@Html.DisplayFor(model => model.LoginErrorMessage)</h4>
+            @*<h4 style="text-align:center;margin-top:20px;color:red">@Html.DisplayFor(model => model.LoginErrorMessage)</h4>*@
             <script>
                 $(".txtb input").on("focus", function () {
                     $(this).addClass("focus");
