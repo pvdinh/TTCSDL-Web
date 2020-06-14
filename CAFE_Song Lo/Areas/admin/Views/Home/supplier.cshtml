@@ -14,7 +14,7 @@
              style="color: var(--color3);text-align: center;">
             <h3>Danh sách nhà cung cấp</h3>
         </div>
-        <form action="/admin/home/Supplier" method="get">
+        <form action="/admin/home/setting" method="get">
             <div class="container">
                 <div class="input-group col-md-4 mb-2" style="padding-left:0px;">
                     @{if (ViewBag.search != null && string.Compare(ViewBag.search, "", true) != 0)
@@ -34,10 +34,9 @@
                 </div>
                 <div class="container" style="text-align:left;padding-left:0px; margin-bottom:10px;">
                     <select class="form-control" name="status" style="width: 355px;margin-left: 0px;" id="status">
-                        @foreach (var item in Model.allnhacungcaps)
-                        {
-                            <option value="@item.diachi">@item.diachi</option>
-                        }
+                        <option value="Status">Status</option>
+                        <option value="Hoạt động">Hoạt động</option>
+                        <option value="Ngưng hoạt động">Ngưng hoạt động</option>
                     </select>
                 </div>
 
@@ -58,7 +57,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model.allnhacungcaps)
+                    @foreach (var item in Model.nhapsanphamFromNCC)
                     {
                         <tr style="line-height:30px;">
                             <td>@item.id</td>
@@ -76,5 +75,5 @@
         </div>
     </div>
 <br />
-Page @(Model.allnhacungcaps.PageCount < Model.allnhacungcaps.PageNumber ? 0 : Model.allnhacungcaps.PageNumber)/@Model.allnhacungcaps.PageCount
-@Html.PagedListPager(Model.allnhacungcaps, page => Url.Action("Supplier", new { page }))
+Page @(Model.nhapsanphamFromNCC.PageCount < Model.nhapsanphamFromNCC.PageNumber ? 0 : Model.nhapsanphamFromNCC.PageNumber)/@Model.nhapsanphamFromNCC.PageCount
+@Html.PagedListPager(Model.nhapsanphamFromNCC, page => Url.Action("supplier", new { page }))
