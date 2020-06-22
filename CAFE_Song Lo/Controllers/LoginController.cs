@@ -36,6 +36,7 @@ namespace CAFE_Song_Lo.Controllers
                 else
                 {
                     //user.LoginErrorMessage = "Wrong username or password.";
+                    TempData["LoginMessage"] = "Tài khoản hoặc mật khẩu không đúng";
                     return View("index", user);
                 }
             }

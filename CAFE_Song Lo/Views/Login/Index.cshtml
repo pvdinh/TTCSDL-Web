@@ -17,7 +17,7 @@
         {
             <h1 style="user-select:none">Login</h1>
             <div class="txtb">
-                @Html.TextBoxFor(model => model.username , new { placeholder = "Username", required = "true" })
+                @Html.TextBoxFor(model => model.username, new { placeholder = "Username", required = "true" })
                 <span></span>
             </div>
             <p style="color:red">@Html.ValidationMessageFor(model => model.username)</p>
@@ -25,10 +25,12 @@
                 @Html.TextBoxFor(model => model.password, new { placeholder = "Password", type = "password", required = "true" })
                 <span></span>
             </div>
-            <p style="color:red;margin-bottom:10px">@Html.ValidationMessageFor(model => model.password)</p>
             <button type="submit" class="logbnt">Login</button>
-
-            @*<h4 style="text-align:center;margin-top:20px;color:red">@Html.DisplayFor(model => model.LoginErrorMessage)</h4>*@
+            if (TempData["LoginMessage"] != null)
+            {
+                <div id="AlertBox" style="color:red;padding-top:20px;">
+                    @TempData["LoginMessage"]
+                </div>}
             <script>
                 $(".txtb input").on("focus", function () {
                     $(this).addClass("focus");
