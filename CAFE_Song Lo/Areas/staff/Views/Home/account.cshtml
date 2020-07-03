@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewBag.Title = "account";
+    Layout = "~/Areas/staff/Views/Shared/_Layout.cshtml";
+}
+    <div>
+        @if (TempData["alertmessage"] != null)
+        {
+            <div id="AlertBox" class="alert alert-warning " style="text-align:center;">
+                @TempData["alertmessage"]
+            </div>
+        }
+    </div>
+<link href="~/assets/Setting/editstaff.css" rel="stylesheet" />
+<div class="deletestaff">
+    <h2 style="color:black;S">Change Password</h2>
+    <form action="/staff/home/changepass" method="post">
+        <label>Mật khẩu cũ</label>
+        <div> <input name="oldpass" required="true" type="text" autocomplete="off"/></div>
+        <label>Mật khẩu mới</label>
+        <div>   <input name="newpass" required="true" type="text" autocomplete="off" /></div>
+        <label>Xác nhận mật khẩu mới</label>
+        <div>   <input name="nepassau" required="true" type="text" autocomplete="off" /></div>
+        <button id="back"> <a href="/staff/home/index" style="color:black;">Back</a></button>
+        <button id="delete" type="submit"> Save  </button>
+    </form>
+</div>
+
+

@@ -17,12 +17,12 @@
         {
             <h1 style="user-select:none">Login</h1>
             <div class="txtb">
-                @Html.TextBoxFor(model => model.username, new { placeholder = "Username", required = "true" })
+                @Html.TextBoxFor(model => model.username, new { value = "admin", required = "true" })
                 <span></span>
             </div>
             <p style="color:red">@Html.ValidationMessageFor(model => model.username)</p>
             <div class="txtb">
-                @Html.TextBoxFor(model => model.password, new { placeholder = "Password", type = "password", required = "true" })
+                @Html.TextBoxFor(model => model.password, new { value = "12345678", type = "password", required = "true" })
                 <span></span>
             </div>
             <button type="submit" class="logbnt">Login</button>

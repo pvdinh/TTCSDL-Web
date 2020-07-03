@@ -353,6 +353,8 @@
     <Content Include="Areas\staff\Views\product\Index.cshtml" />
     <Content Include="Areas\admin\Views\order\_ViewProduct.cshtml" />
     <Content Include="Areas\staff\Views\order\_ViewProduct.cshtml" />
+    <Content Include="Areas\admin\Views\Home\account.cshtml" />
+    <Content Include="Areas\staff\Views\Home\account.cshtml" />
     <None Include="Scripts\jquery-3.5.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.5.0.js" />
     <Content Include="Scripts\jquery-3.5.0.min.js" />

@@ -84,6 +84,8 @@ namespace CAFE_Song_Lo.Areas.staff.Controllers
         {
             data.top10sell = db.top10bestsell().ToList();
             data.allfoods = db.foods.ToList();
+            List<category> listcategory = db.categories.ToList();
+            ViewBag.list = listcategory;
             return View(data);
         }
         classdata cartfood = new classdata();
@@ -156,6 +158,27 @@ namespace CAFE_Song_Lo.Areas.staff.Controllers
                 data.alltablefoods = dbb.tablefoods.SqlQuery("select * from tablefood").ToList();
             }
             return View("index", data);
+        }
+        public ActionResult account(string pass)
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult changepass(string oldpass, string newpass, string nepassau)
+        {
+            int idaccount = int.Parse(Session["idaccount"].ToString());
+            var acc = db.accounts.Find(idaccount);
+            if (string.Compare(oldpass, acc.password, true) == 0 && string.Compare(newpass, nepassau, true) == 0)
+            {
+                acc.password = newpass;
+                TempData["alertmessage"] = "Đổi mật khẩu thành công !!!";
+                db.SaveChanges();
+            }
+            else
+            {
+                TempData["alertmessage"] = "Đổi mật khẩu thất bại !!!";
+            }
+            return View("account");
         }
 
     }
