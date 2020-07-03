@@ -95,6 +95,7 @@ namespace CAFE_Song_Lo.Areas.admin.Controllers
         {
             ViewBag.search = searchstring;
             ViewBag.status = Status;
+            data.allstaffs = db.staffs.ToList();
             if (!string.IsNullOrEmpty(searchstring))
             {
                 data.allstaffs = db.staffs.Where(s => s.name.Contains(searchstring)).ToList();
@@ -121,11 +122,10 @@ namespace CAFE_Song_Lo.Areas.admin.Controllers
                 }
                 else data.allstaffs = db.staffs.ToList();
             }
-
-            int pageSize = 5;
-            int pagenumber = page ?? 1;
-            ViewBag.count = db.staffs.ToList().Count();
-            return View(data.allstaffs.ToPagedList(pagenumber, pageSize));
+            ViewBag.count = data.allstaffs.Count();
+            ViewBag.add = db.accounts.OrderByDescending(s=>s.id).Select(s=>s.id).FirstOrDefault() + 1;
+            if (ViewBag.add == null) ViewBag.add = 1;
+            return View(data.allstaffs.ToPagedList(page ?? 1, 7));
         }
 
         public ActionResult editstaff(int id)
@@ -173,9 +173,25 @@ namespace CAFE_Song_Lo.Areas.admin.Controllers
             {
                 data.allstaffs = db.staffs.ToList();
                 int idaccount = data.allstaffs[data.allstaffs.Count() - 1].idaccount + 1;
-                string username = "user" + idaccount.ToString();
+                string username;
+                if (string.Compare(astaff.position, "Ban quản lý", true) == 0)
+                {
+                    username = "admin" + idaccount.ToString();
+                }
+                else
+                {
+                    username = "user" + idaccount.ToString();
+                }
                 string password = "12345678";
-                string type = "staff";
+                string type;
+                if (string.Compare(astaff.position, "Ban quản lý",true) ==0)
+                {
+                    type = "admin";
+                }
+                else
+                {
+                    type = "staff";
+                }
                 db.Addstaffaccountlatest(astaff.name, astaff.status, astaff.position, astaff.email, idaccount, username, password, type);
             }
             return RedirectToAction("setting", "Home", new { area = "admin" });
