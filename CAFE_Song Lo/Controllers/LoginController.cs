@@ -35,8 +35,20 @@ namespace CAFE_Song_Lo.Controllers
                 }
                 else
                 {
-                    //user.LoginErrorMessage = "Wrong username or password.";
-                    TempData["LoginMessage"] = "Tài khoản hoặc mật khẩu không đúng";
+                    if(string.IsNullOrEmpty(user.password))
+                    {
+                        ModelState.AddModelError("password", "Chưa nhập mật khẩu !");
+                    }
+                    if (string.IsNullOrEmpty(user.username))
+                    {
+                        ModelState.AddModelError("username", "Chưa nhập tài khoản !");
+                    }
+                    if(string.IsNullOrEmpty(user.username) == false && string.IsNullOrEmpty(user.password) == false)
+                    {
+                        //user.LoginErrorMessage = "Wrong username or password.";
+                        TempData["LoginMessage"] = "Tài khoản hoặc mật khẩu không đúng";
+                        return View("index", user);
+                    }
                     return View("index", user);
                 }
             }

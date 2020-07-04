@@ -17,12 +17,11 @@
         {
             <h1 style="user-select:none">Login</h1>
             <div class="txtb">
-                @Html.TextBoxFor(model => model.username, new { value = "admin", required = "true" })
+                @Html.TextBoxFor(model => model.username, new { value = "" })
                 <span></span>
             </div>
-            <p style="color:red">@Html.ValidationMessageFor(model => model.username)</p>
             <div class="txtb">
-                @Html.TextBoxFor(model => model.password, new { value = "12345678", type = "password", required = "true" })
+                @Html.TextBoxFor(model => model.password, new { value = "", type = "password" })
                 <span></span>
             </div>
             <button type="submit" class="logbnt">Login</button>
@@ -31,16 +30,20 @@
                 <div id="AlertBox" style="color:red;padding-top:20px;">
                     @TempData["LoginMessage"]
                 </div>}
-            <script>
-                $(".txtb input").on("focus", function () {
-                    $(this).addClass("focus");
-                });
+    <div id="AlertBox" style="color:red;padding-top:20px;">
+        @Html.ValidationMessageFor(model => model.username) <br />
+        @Html.ValidationMessageFor(model => model.password)
+    </div>
+        <script>
+            $(".txtb input").on("focus", function () {
+                $(this).addClass("focus");
+            });
 
-                $(".txtb input").on("blur", function () {
-                    if ($(this).val() == "")
-                        $(this).removeClass("focus");
-                });
-            </script>
+            $(".txtb input").on("blur", function () {
+                if ($(this).val() == "")
+                    $(this).removeClass("focus");
+            });
+        </script>
 
         }
 
